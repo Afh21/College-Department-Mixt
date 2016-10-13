@@ -12,7 +12,7 @@
                 </li>
             @else
                 <li>
-                    <i class="fa fa-shield right"></i> Sr, {{ Auth::user()->name }}
+                    <i class="fa fa-shield right" style="padding-right:15px"></i> Sr, {{ Auth::user()->name }}
                 </li>
                 <li>
                     <a class="dropdown-button" href="#!" data-activates="dropdown1" style="padding-left: 50px"> Opciones
@@ -29,7 +29,7 @@
 <!-- Dropdown Structure -->
 <ul id="dropdown1" class="dropdown-content">
     <li>
-        <a href="">
+        <a href="{{url('/dashboard')}}">
             <i class="fa fa-dashboard"></i> &nbsp; Dashboard
         </a>
     </li>

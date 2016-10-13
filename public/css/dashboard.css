@@ -1,0 +1,14 @@
+html, body{
+
+}
+
+header, main, footer {
+    padding-left: 320px;
+}
+
+ul.collapsible li a i {
+    font-size: 15px;
+}
+.side-nav.fixed a.waves-effect {
+    padding: 0 22px;
+}

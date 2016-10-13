@@ -18,10 +18,10 @@ class UsersTableSeeder extends Seeder
         $user = new User();
         $user->user_type        = 'CC';
         $user->user_identity    = '1010205446';
-        $user->name        = 'Andres Felipe';
+        $user->name             = 'Andres Felipe';
         $user->user_lastname    = 'Hoyos Arboleda';
-        $user->email       = 'andres_felipe0929@hotmail.com';
-        $user->password    = bcrypt('123456');
+        $user->email            = 'andres_felipe0929@hotmail.com';
+        $user->password         = bcrypt('123456');
         $user->user_genre       = 'M';
         $user->user_birthday    = '1992/09/29';
         $user->user_age         = 24;
