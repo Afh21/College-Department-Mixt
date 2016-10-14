@@ -18,7 +18,23 @@ Route::get('/', function () {
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+
 Route::get('/dashboard', [
     'uses'  => 'DashboardController@index',
     'as'    => 'dashboard'
+]);
+
+Route::get('/admins', [
+   'uses' => 'DashboardController@getAdmins',
+    'as'  => 'admins'
+]);
+
+Route::get('/admins/find/{id}', [
+   'uses' => 'DashboardController@find',
+    'as'  => 'find'
+]);
+
+Route::put('/admins/find/{id}/update', [
+   'uses' => 'DashboardController@updateAdmin',
+    'as'  => 'update'
 ]);

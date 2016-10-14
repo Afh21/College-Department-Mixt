@@ -12,3 +12,23 @@ ul.collapsible li a i {
 .side-nav.fixed a.waves-effect {
     padding: 0 22px;
 }
+
+.collapsible-body p {
+    padding: 0px 30px !important;
+}
+
+ul.collapsible ul li i{
+    color: #36BBE8;
+}
+
+ul.collapsible ul li:nth-child(2) i{
+    color: black;
+}
+
+ul.collapsible ul li:nth-child(3) i{
+    color: black;
+}
+
+div.col div.card-action {
+    padding: 1px;
+}

@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Town;
 use App\User;
+use App\Role;
 
 class UsersTableSeeder extends Seeder
 {
@@ -14,6 +15,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $town    = Town::where('town_name', 'La Dorada')->first();
+        $roleAdm = Role::where('name', 'Administrator')->first();
 
         $user = new User();
         $user->user_type        = 'CC';
@@ -31,7 +33,7 @@ class UsersTableSeeder extends Seeder
         $user->user_profession  = 'Ing. Electronico';
 
         $town->TownsUsers()->save($user);
-
+        $user->attachRole($roleAdm);
         $user->save();
     }
 }

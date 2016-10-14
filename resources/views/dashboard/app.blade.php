@@ -19,22 +19,16 @@
     </header>
 
     <main>
-        hola
+        @yield('content')
     </main>
 
     <footer>
-
+        @yield('footer')
     </footer>
 
     @include('layouts.links.js')
 
     @yield('js')
-
-    <script>
-        $(document).ready(function(){
-            $('.collapsible').collapsible();
-        })
-    </script>
 
 </body>
 </html>

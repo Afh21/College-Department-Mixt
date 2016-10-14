@@ -3,11 +3,15 @@
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Bican\Roles\Traits\HasRoleAndPermission;
+use Bican\Roles\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasRoleAndPermissionContract
 {
-    protected $fillable = [
-        'name', 'email', 'password', 'country_id', 'department_id','town_id'
+    use HasRoleAndPermission;
+
+    protected $guarded = [
+        'user_state', 'user_director', 'id'
     ];
 
     protected $hidden = [
@@ -16,17 +20,12 @@ class User extends Authenticatable
 
     // Relaciones
 
-    public function countries(){
-        return $this->belongsTo('App\Country');
-    }
-
-    public function departments(){
-        return $this->belongsTo('App\Departments');
-    }
-
-    public function towns(){
+    public function town(){
         return $this->belongsTo('App\Town');
     }
 
+    public function roles(){
+        return $this->belongsToMany('App\Role', 'role_user','user_id', 'role_id');
+    }
 
 }
