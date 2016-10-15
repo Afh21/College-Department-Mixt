@@ -47,26 +47,36 @@
         <div class="new">
             <div class="row">
                 <div class="col l2 center">
-                    <button class="btn-floating btn-large waves-effect waves-light teal darken-1 tooltiped " data-position="bottom" data-delay="50" data-tooltip="Crear Administrador">
+                    <button class="btn-floating btn-large waves-effect waves-light teal darken-1 tooltiped modal-trigger create" data-target="modalCreate" data-position="bottom" data-delay="50" data-tooltip="Crear Administrador">
                         <i class="fa fa-plus"></i>
                     </button>
                 </div>
             </div>
         </div>
 
+
+
         <div id="edit">
             @include('dashboard.views.formEdit')
         </div>
+
+        <div id="create">
+            @include('dashboard.views.formCreate')
+        </div>
+
 @endsection
 
 @section('js')
     <script>
         $(document).ready(function(){
             $('.tooltiped').tooltip();
-
             $('.modal-trigger').leanModal({dismissible: false});
-
             $('select').material_select();
+
+            $('.create').click(function(){
+                $('#modalCreate').openModal();
+            });
+
 
             $('.modal-trigger.edit').click(function(){
                 var id = $(this).parent('li').attr('data-id');
@@ -106,8 +116,8 @@
                     $('#profession').val(res.user.user_profession);
                     $('button.update').attr('data-id', res.user.id);
 
-                    //$('#city').val(res.user.town.town_name);
-                    /*$(res.dept).each(function(key){
+                    /*$('#city').val(res.user.town.town_name);
+                    $(res.dept).each(function(key){
                         $('select#dept').append($('<option></option>').attr('value', res.dept[key].id).text(res.dept[key].dept_name));
                         $('select#dept').material_select();
                     });*/
@@ -116,7 +126,6 @@
                     alert('No se envio nada');
                 });
             });
-
             $('button.update').click(function(){
                 var id      = $(this).attr('data-id');
                 var route   = "http://localhost:8000/admins/find/"+id+"/update";
@@ -138,6 +147,7 @@
                 })
 
             });
+
 
         });
     </script>

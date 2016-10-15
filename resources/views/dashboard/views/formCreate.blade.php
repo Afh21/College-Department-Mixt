@@ -1,11 +1,28 @@
-<div class="modal row" id="modalEdit">
+<div class="modal row" id="modalCreate">
 
     <div class="center" style="padding-top:20px">
-        <h3> Actualizacion de Datos </h3>
+        <h3> Crear Administrador </h3>
     </div>
 
+
     <div class="modal-content modal-lg">
-        <form method="PUT" id="formEdit" class="col s12">
+        <div class="input-field col l12 s12">
+            <div class="col s6 l6">
+                <select id="user_type" name="user_type">
+                    <option value="" selected>Escoga una opcion</option>
+                    <option value="CC">Cedula de Ciudadania</option>
+                    <option value="PS">Pasaporte</option>
+                    <option value="RUT">Registro Unico Tributario</option>
+                </select>
+            </div>
+            <div class="col l6">
+                <i class="fa fa-lock prefix"></i>
+                <input id="cedula" type="text" class="validate" name="cc">
+            </div>
+        </div>
+
+        {{-- TOCA CAMBIAR EL NOMBRE DE TODOS LOS CAMPOS PARA QUE SIRVA POR COMPLETO EL CREAR ADMINISTRADORES
+        <form method="POST" id="formCreate" class="col s12">
             <input type="hidden" name="_token" id="token" value="{{csrf_token()}}">
             <div class="row">
 
@@ -96,17 +113,23 @@
                     <input id="profession" type="text" class="validate" name="profession">
                 </div>
 
-                <!-- Falta tener el select de los Departamentos y los Municipios-->
-
+                <div id="depto">
+                    <select name="" id="depto"></select>
+                </div>
+                
+                <div id="towns">
+                    <select name="" id="towns"></select>
+                </div>
+                
             </div>
-        </form>
+        </form>--}}
     </div>
 
     <div class="modal-footer center">
         <div class="center">
             <ul style="list-style-type: none; margin-bottom: 20px">
                 <li style="display: inline">
-                    <button class="waves-effect btn-floating update"> <i class="fa fa-send"></i> </button>
+                    <button class="waves-effect btn-floating crear"> <i class="fa fa-plus"></i> </button>
                 </li>
                 <li style="display: inline; padding-left: 15px">
                     <button class="modal-action modal-close waves-effect btn-floating red"> <i class="fa fa-times-circle"></i> </button>
@@ -114,4 +137,6 @@
             </ul>
         </div>
     </div>
+
+
 </div>
