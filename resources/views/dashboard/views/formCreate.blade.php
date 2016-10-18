@@ -4,31 +4,15 @@
         <h3> Crear Administrador </h3>
     </div>
 
-
     <div class="modal-content modal-lg">
-        <div class="input-field col l12 s12">
-            <div class="col s6 l6">
-                <select id="user_type" name="user_type">
-                    <option value="" selected>Escoga una opcion</option>
-                    <option value="CC">Cedula de Ciudadania</option>
-                    <option value="PS">Pasaporte</option>
-                    <option value="RUT">Registro Unico Tributario</option>
-                </select>
-            </div>
-            <div class="col l6">
-                <i class="fa fa-lock prefix"></i>
-                <input id="cedula" type="text" class="validate" name="cc">
-            </div>
-        </div>
 
-        {{-- TOCA CAMBIAR EL NOMBRE DE TODOS LOS CAMPOS PARA QUE SIRVA POR COMPLETO EL CREAR ADMINISTRADORES
         <form method="POST" id="formCreate" class="col s12">
             <input type="hidden" name="_token" id="token" value="{{csrf_token()}}">
             <div class="row">
 
                 <div class="input-field col l12 s12">
                     <div class="col s6 l6">
-                        <select id="type" name="type">
+                        <select id="user_type" name="user_type">
                             <option value="" selected>Escoga una opcion</option>
                             <option value="CC">Cedula de Ciudadania</option>
                             <option value="PS">Pasaporte</option>
@@ -37,28 +21,28 @@
                     </div>
                     <div class="col l6">
                         <i class="fa fa-lock prefix"></i>
-                        <input id="identity" type="text" class="validate" name="identity">
+                        <input id="cedula" type="text" class="validate" name="cc">
                     </div>
                 </div>
 
                 <div class="input-field col s6">
                     <i class="fa fa-angle-right prefix"></i>
-                    <input id="name" type="text" class="validate" name="name">
+                    <input id="nombre" type="text" class="validate" name="nombre">
                 </div>
 
                 <div class="input-field col s6">
                     <i class="fa fa-angle-right prefix"></i>
-                    <input id="lastname" type="text" class="validate" name="lastname">
+                    <input id="apellidos" type="text" class="validate" name="apellidos">
                 </div>
 
                 <div class="input-field col s6">
                     <i class="fa fa-angle-double-right prefix"></i>
-                    <input id="email" type="email" class="validate" name="email">
+                    <input id="correo" type="email" class="validate" name="correo">
                 </div>
 
                 <div class="input-field col s6">
                     <i class="fa fa-user-secret prefix"></i>
-                    <input id="password" type="password" class="validate" name="password">
+                    <input id="contraseña" type="password" class="validate" name="contraseña">
                 </div>
 
                 <div class="col s6 l6">
@@ -66,7 +50,7 @@
                         <i class="fa fa-female fa-3x"></i> <i class="fa fa-male fa-3x"></i>
                     </div>
                     <div class="col l8">
-                        <select name="genre" id="genre">
+                        <select name="genero" id="genero">
                             <option value="" selected>Escoga una opcion</option>
                             <option value="F"><i class="fa fa-female left"></i>Mujer</option>
                             <option value="M"><i class="fa fa-male left"></i>Hombre</option>
@@ -76,63 +60,67 @@
 
                 <div class="input-field col s6">
                     <i class="fa fa-calendar-plus-o prefix"></i>
-                    <input id="birthday" type="text" class="validate" name="birthday">
+                    <input id="fecha_nac" type="text" class="validate" name="fecha_nac">
                 </div>
 
                 <div class="input-field col s6">
                     <i class="fa fa-tags prefix"></i>
-                    <input id="age" type="text" class="validate" name="age">
+                    <input id="edad" type="text" class="validate" name="edad">
                 </div>
 
                 <div class="input-field col s6">
                     <i class="fa fa-user-secret prefix"></i>
-                    <input id="address" type="text" class="validate" name="address">
+                    <input id="direccion" type="text" class="validate" name="direccion">
                 </div>
 
                 <div class="input-field col s6">
                     <i class="fa fa-phone prefix"></i>
-                    <input id="phone" type="text" class="validate" name="phone">
+                    <input id="telefono" type="text" class="validate" name="telefono">
                 </div>
 
                 <div class="input-field col s6">
                     <i class="fa fa-heart prefix"></i>
-                    <input id="blood" type="text" class="validate" name="blood">
+                    <input id="rh" type="text" class="validate" name="rh">
                 </div>
 
                 <div class="input-field col s6">
                     <i class="fa fa-hand-o-right prefix"></i>
-                    <input type="checkbox" class="filled-in" id="active" name="active"/>
-                    <label for="active">Activo</label>
+                    <input type="checkbox" class="filled-in" id="activo" name="activo"/>
+                    <label for="activo">Activo</label>
 
-                    <input type="checkbox" class="filled-in" id="disabled" name="disabled"/>
-                    <label for="disabled">Inactivo</label>
+                    <input type="checkbox" class="filled-in" id="inactivo" name="inactivo"/>
+                    <label for="inactivo">Inactivo</label>
                 </div>
 
                 <div class="input-field col s6">
                     <i class="fa fa-institution prefix"></i>
-                    <input id="profession" type="text" class="validate" name="profession">
+                    <input id="profesion" type="text" class="validate" name="profesion">
                 </div>
 
-                <div id="depto">
-                    <select name="" id="depto"></select>
+                <div class="input-field col s6">
+                    <div id="d">
+                        <select name="" id="d"></select>
+                    </div>
                 </div>
-                
-                <div id="towns">
-                    <select name="" id="towns"></select>
+
+                <div class="input-field col s6">
+                    <div id="m">
+                        <select name="" id="m"></select>
+                    </div>
                 </div>
-                
+
             </div>
-        </form>--}}
+        </form>
     </div>
 
     <div class="modal-footer center">
         <div class="center">
             <ul style="list-style-type: none; margin-bottom: 20px">
                 <li style="display: inline">
-                    <button class="waves-effect btn-floating crear"> <i class="fa fa-plus"></i> </button>
+                    <button class="waves-effect btn-floating crear tooltiped" data-position="bottom" data-delay="50" data-tooltip="Crear"> <i class="fa fa-plus"></i> </button>
                 </li>
                 <li style="display: inline; padding-left: 15px">
-                    <button class="modal-action modal-close waves-effect btn-floating red"> <i class="fa fa-times-circle"></i> </button>
+                    <button class="modal-action modal-close waves-effect btn-floating red tooltiped" data-position="bottom" data-delay="50" data-tooltip="Cancelar"> <i class="fa fa-times"></i> </button>
                 </li>
             </ul>
         </div>

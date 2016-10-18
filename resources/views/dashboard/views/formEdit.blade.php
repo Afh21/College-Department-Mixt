@@ -106,10 +106,10 @@
         <div class="center">
             <ul style="list-style-type: none; margin-bottom: 20px">
                 <li style="display: inline">
-                    <button class="waves-effect btn-floating update"> <i class="fa fa-send"></i> </button>
+                    <button class="waves-effect btn-floating update teal darken-1"> <i class="fa fa-send-o"></i> </button>
                 </li>
                 <li style="display: inline; padding-left: 15px">
-                    <button class="modal-action modal-close waves-effect btn-floating red"> <i class="fa fa-times-circle"></i> </button>
+                    <button class="modal-action modal-close waves-effect btn-floating red"> <i class="fa fa-times"></i> </button>
                 </li>
             </ul>
         </div>
