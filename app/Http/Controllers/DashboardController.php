@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\User;
-use App\Town;
-use App\Departments;
+use App\Role;
 use DB;
 
 class DashboardController extends Controller
@@ -74,7 +73,30 @@ class DashboardController extends Controller
     }
 
     public function saveAdmin(Request $request){
+        if($request->ajax()){
+            $rol = Role::find($request->group1);
 
+            $user = new User;
+            $user->user_type    = $request->user_type;
+            $user->user_identity= $request->cc;
+            $user->name         = $request->nombre;
+            $user->user_lastname= $request->apellidos;
+            $user->email        = $request->correo;
+            $user->password     = bcrypt($request->password);
+            $user->user_genre   = $request->genero;
+            $user->user_birthday= $request->fecha_nac;
+            $user->user_age     = $request->edad;
+            $user->user_address = $request->direccion;
+            $user->user_phone   = $request->telefono;
+            $user->user_blood   = $request->rh;
+            $user->user_profession = $request->profesion;
+            $user->save();
+            $user->attachRole($rol);
+
+            return response()->json([
+               'msn' => 'Usuario creado exitosamente'
+            ]);
+        }
     }
 
 

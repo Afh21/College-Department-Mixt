@@ -7,7 +7,7 @@
     <div class="modal-content modal-lg">
 
         <form method="POST" id="formCreate" class="col s12">
-            <input type="hidden" name="_token" id="token" value="{{csrf_token()}}">
+            <input type="hidden" name="_token" id="tokenC" value="{{csrf_token()}}">
             <div class="row">
 
                 <div class="col l12 center">

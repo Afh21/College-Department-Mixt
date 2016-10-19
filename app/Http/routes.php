@@ -43,6 +43,3 @@ Route::post('/admins/save', [
    'uses' => 'DashboardController@saveAdmin',
     'as'  => 'save'
 ]);
-
-Route::get('/departments', 'DashboardController@departments');
-Route::get('/towns/{id}', 'DashboardController@towns');

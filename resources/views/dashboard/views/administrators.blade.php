@@ -4,7 +4,6 @@
 
         <div class="row">
             @foreach($admin as $admin)
-                <div class="row">
                     <div class="col l4 s12 m7">
                         <div class="card">
                             <div class="image" style="text-align: center">
@@ -40,19 +39,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
             @endforeach
         </div>
-
-        <!--<div class="new">
-            <div class="row">
-                <div class="col l2 center">
-                    <button class="btn-floating btn-large waves-effect waves-light teal darken-1 tooltiped modal-trigger create" data-target="modalCreate" data-position="bottom" data-delay="50" data-tooltip="Crear Administrador">
-                        <i class="fa fa-plus"></i>
-                    </button>
-                </div>
-            </div>
-        </div> -->
 
         <div id="create">
             @include('dashboard.views.formCreate')
@@ -76,7 +64,29 @@
             $('.modal-trigger.create').click(function(){
                 $(this).parent('a').removeClass('collapsible-header');
                 $('#modalCreate').openModal();
+
+                $('button.crear').click(function (){
+                    var routeSave = 'http://localhost:8000/admins/save';
+                    var data    = $('#formCreate').serialize();
+                    var token   = $('#tokenC').attr('value');
+
+                    $.ajax({
+                        url: routeSave,
+                        type: 'POST',
+                        headers: 	{ 'X-CSRF-TOKEN': token },
+                        dataType: 	'json',
+                        data:        data,
+                        success: function(res) {
+                            alert('Registro exitoso');
+                            window.href.location = 'http://localhost:8000/admins';
+                        },
+                        fail: function (){
+                            alert('No se completo el registro');
+                        }
+                    });
+                });
             });
+
             $('button.modal-close').click(function (){
                 $('a.menu').addClass('collapsible-header');
             });
