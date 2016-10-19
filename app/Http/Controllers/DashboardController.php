@@ -28,19 +28,16 @@ class DashboardController extends Controller
 
     public function find($id){
         $user = User::find($id);
-        $town = $user->town->dept_id;
-
-        $dept = Departments::all();
 
         return response()->json([
-            'user' => $user,
-            'dept' => $dept
+            'user' => $user
         ]);
     }
 
     public function updateAdmin(Request $request, $id){
 
         if($request->ajax()){
+
             $user = User::find($id);
             $user->user_type        = $request->type;
             $user->user_identity    = $request->identity;
@@ -74,8 +71,11 @@ class DashboardController extends Controller
                 'msn' => 'Datos actualizados exitosamente'
             ]);
         }
+    }
 
-
+    public function saveAdmin(Request $request){
 
     }
+
+
 }

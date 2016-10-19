@@ -14,7 +14,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $town    = Town::where('town_name', 'La Dorada')->first();
+        //$town    = Town::where('town_name', 'La Dorada')->first();
         $roleAdm = Role::where('name', 'Administrator')->first();
 
         $user = new User();
@@ -31,9 +31,13 @@ class UsersTableSeeder extends Seeder
         $user->user_phone       = '3217475841';
         $user->user_blood       = 'O+';
         $user->user_profession  = 'Ing. Electronico';
+        $user->user_country     = 'Colombia';
+        $user->user_department  = 'Caldas';
+        $user->user_town        = 'La Dorada';
 
-        $town->TownsUsers()->save($user);
-        $user->attachRole($roleAdm);
+        //$town->TownsUsers()->save($user);
         $user->save();
+        $user->attachRole($roleAdm);
+
     }
 }

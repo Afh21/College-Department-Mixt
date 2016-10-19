@@ -30,6 +30,9 @@ class CreateUsersTable extends Migration
             $table->enum('user_state', ['enabled', 'disabled'])->default('enabled'); // Active, Desactive
             $table->boolean('user_director')->default(false);  // Profesor, ¿director de grupo?
             $table->string('user_profession', 100)->nullable();// Ej: Ing. Industrial, Lic. Matematicas.
+            $table->string('user_country', 50);
+            $table->string('user_department',50 );
+            $table->string('user_town',50);
             $table->rememberToken();
             $table->timestamps();
         });

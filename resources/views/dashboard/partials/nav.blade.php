@@ -17,7 +17,10 @@
     <li>
         <ul class="collapsible" data-collapsible="accordion">
             <li>
-                <a class="collapsible-header"> <i class="fa fa-users left"></i> Usuarios </a>
+                <a class="collapsible-header menu"> <i class="fa fa-users left"></i> Usuarios
+                    <button class="btn-floating btn-flat btn-xs waves-effect waves-light teal darken-1 right modal-trigger create tooltiped" style="display: inherit; padding-left: 3px; vertical-align: middle; margin-top: 4px" data-target="modalCreate" data-tooltip="Crear Usuario" data-delay="50" data-position="bottom"> <i class="fa fa-plus"></i> </button>
+                </a>
+
                 <div class="collapsible-body">
                    <ul>
                        <li>

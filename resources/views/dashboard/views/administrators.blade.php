@@ -44,7 +44,7 @@
             @endforeach
         </div>
 
-        <div class="new">
+        <!--<div class="new">
             <div class="row">
                 <div class="col l2 center">
                     <button class="btn-floating btn-large waves-effect waves-light teal darken-1 tooltiped modal-trigger create" data-target="modalCreate" data-position="bottom" data-delay="50" data-tooltip="Crear Administrador">
@@ -52,17 +52,16 @@
                     </button>
                 </div>
             </div>
+        </div> -->
+
+        <div id="create">
+            @include('dashboard.views.formCreate')
         </div>
-
-
 
         <div id="edit">
             @include('dashboard.views.formEdit')
         </div>
 
-        <div id="create">
-            @include('dashboard.views.formCreate')
-        </div>
 
 @endsection
 
@@ -73,10 +72,23 @@
             $('.modal-trigger').leanModal({dismissible: false});
             $('select').material_select();
 
-            $('.create').click(function(){
+
+            $('.modal-trigger.create').click(function(){
+                $(this).parent('a').removeClass('collapsible-header');
                 $('#modalCreate').openModal();
             });
-
+            $('button.modal-close').click(function (){
+                $('a.menu').addClass('collapsible-header');
+            });
+            $('ul#type input').each(function (){
+                var id = $(this).attr('value');
+                $(this).click(function (){
+                  if(id == 3) {
+                      $('select#user_type').append($("<option value='TI'> Tarjeta de Identidad </option> <option value='RC'> Registro Civil </option>"));
+                      $('select#user_type').material_select();
+                  }
+                })
+            })
 
             $('.modal-trigger.edit').click(function(){
                 var id = $(this).parent('li').attr('data-id');
@@ -147,7 +159,6 @@
                 })
 
             });
-
 
         });
     </script>

@@ -11,7 +11,7 @@ class User extends Authenticatable implements HasRoleAndPermissionContract
     use HasRoleAndPermission;
 
     protected $guarded = [
-        'user_state', 'user_director', 'id'
+        'user_state', 'user_director'
     ];
 
     protected $hidden = [
