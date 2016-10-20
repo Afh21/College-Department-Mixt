@@ -33,6 +33,7 @@ class CreateUsersTable extends Migration
             $table->string('user_country', 50);
             $table->string('user_department',50 );
             $table->string('user_town',50);
+
             $table->rememberToken();
             $table->timestamps();
         });

@@ -43,13 +43,12 @@
         </div>
 
         <div id="create">
-            @include('dashboard.views.formCreate')
+            @include('dashboard.views.administrators.formCreate')
         </div>
 
         <div id="edit">
-            @include('dashboard.views.formEdit')
+            @include('dashboard.views.administrators.formEdit')
         </div>
-
 
 @endsection
 

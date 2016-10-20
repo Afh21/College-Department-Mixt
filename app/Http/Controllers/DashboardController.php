@@ -6,10 +6,16 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\User;
 use App\Role;
+use App\Period;
 use DB;
 
 class DashboardController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('auth');
+    }
+
     public function index(){
         return view('dashboard.app');
     }
@@ -22,8 +28,16 @@ class DashboardController extends Controller
                                     ->select('users.name', 'users.id', 'users.email', 'users.user_lastname', 'users.user_state')
                                     ->get();
 
-        return view('dashboard.views.administrators')->with('admin', $admin);
+        return view('dashboard.views.administrators.administrators')->with('admin', $admin);
     }
+
+
+    public function getPeriods(){
+        $periods = Period::orderBy('id', 'ASC')->get();
+
+        return view('dashboard.views.periods.periods')->with('periods', $periods);
+    }
+
 
     public function find($id){
         $user = User::find($id);

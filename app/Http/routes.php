@@ -19,27 +19,50 @@ Route::auth();
 
 Route::get('/home', 'HomeController@index');
 
-Route::get('/dashboard', [
-    'uses'  => 'DashboardController@index',
-    'as'    => 'dashboard'
-]);
+Route::group(['middleware' => 'auth'], function (){
 
-Route::get('/admins', [
-   'uses' => 'DashboardController@getAdmins',
-    'as'  => 'admins'
-]);
+    Route::get('/dashboard', [
+        'uses'  => 'DashboardController@index',
+        'as'    => 'dashboard'
+    ]);
 
-Route::get('/admins/find/{id}', [
-   'uses' => 'DashboardController@find',
-    'as'  => 'find'
-]);
+    Route::get('/admins', [
+       'uses' => 'DashboardController@getAdmins',
+        'as'  => 'admins'
+    ]);
 
-Route::put('/admins/find/{id}/update', [
-   'uses' => 'DashboardController@updateAdmin',
-    'as'  => 'update'
-]);
+    Route::get('/admins/find/{id}', [
+       'uses' => 'DashboardController@find',
+        'as'  => 'find'
+    ]);
 
-Route::post('/admins/save', [
-   'uses' => 'DashboardController@saveAdmin',
-    'as'  => 'save'
-]);
+    Route::put('/admins/find/{id}/update', [
+       'uses' => 'DashboardController@updateAdmin',
+        'as'  => 'update'
+    ]);
+
+    Route::post('/admins/save', [
+       'uses' => 'DashboardController@saveAdmin',
+        'as'  => 'save'
+    ]);
+
+    Route::get('/dashboard/periods', [
+       'uses' => 'DashboardController@getPeriods',
+        'as'  => 'periods'
+    ]);
+
+    Route::get('/periods/{id}/destroy', [
+       'uses' => 'PeriodController@destroy',
+        'as'  => 'destroy'
+    ]);
+
+    Route::get('/periods/{id}/find', [
+        'uses'  => 'PeriodController@find',
+        'as'    => 'find'
+    ]);
+
+    Route::put('/periods/{id}', [
+       'uses'   => 'PeriodController@update',
+        'as'    => 'update'
+    ]);
+});
