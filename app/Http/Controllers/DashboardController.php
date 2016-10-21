@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\User;
 use App\Role;
 use App\Period;
+use App\Math;
 use DB;
 
 class DashboardController extends Controller
@@ -36,6 +37,12 @@ class DashboardController extends Controller
         $periods = Period::orderBy('id', 'ASC')->get();
 
         return view('dashboard.views.periods.periods')->with('periods', $periods);
+    }
+
+    public function getMaths(){
+        $math = Math::orderBy('math_code', 'ASC')->get();
+
+        return view('dashboard.views.maths.maths')->with('math', $math);
     }
 
 

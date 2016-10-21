@@ -55,6 +55,7 @@
 @section('js')
     <script>
         $(document).ready(function(){
+
             $('.tooltiped').tooltip();
             $('.modal-trigger').leanModal({dismissible: false});
             $('select').material_select();

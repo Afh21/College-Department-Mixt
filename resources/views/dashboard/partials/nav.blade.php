@@ -19,9 +19,9 @@
             <li>
                 <a class="collapsible-header menu"> <i class="fa fa-users left"></i> Usuarios
                     @if(!Route::is('admins'))
-                        <button disabled class="btn-floating btn-flat btn-xs waves-effect waves-light teal darken-1 right modal-trigger create tooltiped" style="display: inherit; padding-left: 3px; vertical-align: middle; margin-top: 4px" data-target="modalCreate" data-tooltip="Crear Usuario" data-delay="50" data-position="bottom"> <i class="fa fa-plus"></i> </button>
+                        <button disabled class="btn-floating btn-flat btn-xs waves-effect waves-light grey lighten-1 right tooltiped" style="display: inherit; padding-left: 3px; vertical-align: middle; margin-top: 4px" data-tooltip="Crear Usuario" data-delay="50" data-position="right"> <i class="fa fa-plus"></i> </button>
                     @else
-                        <button class="btn-floating btn-flat btn-xs waves-effect waves-light teal darken-1 right modal-trigger create tooltiped" style="display: inherit; padding-left: 3px; vertical-align: middle; margin-top: 4px" data-target="modalCreate" data-tooltip="Crear Usuario" data-delay="50" data-position="bottom"> <i class="fa fa-plus"></i> </button>
+                        <button class="btn-floating btn-flat btn-xs waves-effect waves-light grey lighten-1 right modal-trigger create tooltiped" style="display: inherit; padding-left: 3px; vertical-align: middle; margin-top: 4px" data-target="modalCreate" data-tooltip="Crear Usuario" data-delay="50" data-position="right"> <i class="fa fa-plus" style="color: black"></i> </button>
                     @endif
                 </a>
 
@@ -52,11 +52,21 @@
                         <li>
                             <a href="{{route('periods')}}">
                                 <i class="fa fa-archive left"></i> Periodos
+                                @if(!Route::is('periods'))
+                                    <button disabled class="btn-floating btn-flat btn-xs waves-effect waves-light grey lighten-1  right tooltiped" style="display: inherit; vertical-align: middle; margin-top: 4px" data-tooltip="Crear Periodo" data-delay="50" data-position="right"> <i class="fa fa-plus" style="color:white"></i> </button>
+                                @else
+                                    <button class="btn-floating btn-flat btn-xs waves-effect waves-light grey lighten-1  right modal-trigger createPeriod tooltiped" style="display: inherit; vertical-align: middle; margin-top: 4px" data-target="modalCreatePeriod" data-tooltip="Crear Periodo" data-delay="50" data-position="right"> <i class="fa fa-plus" style="color:black"></i> </button>
+                                @endif
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="{{route('maths')}}">
                                 <i class="fa fa-newspaper-o left"></i> Materias
+                                @if(!Route::is('maths'))
+                                    <button disabled class="btn-floating btn-flat btn-xs waves-effect waves-light grey lighten-1  right tooltiped" style="display: inherit; vertical-align: middle; margin-top: 4px" data-tooltip="Crear Materia" data-delay="50" data-position="right"> <i class="fa fa-plus" style="color:white"></i> </button>
+                                @else
+                                    <button class="btn-floating btn-flat btn-xs waves-effect waves-light grey lighten-1  right modal-trigger createMath tooltiped" style="display: inherit; vertical-align: middle; margin-top: 4px" data-target="modalCreateMath" data-tooltip="Crear Materia" data-delay="50" data-position="right"> <i class="fa fa-plus" style="color:black"></i> </button>
+                                @endif
                             </a>
                         </li>
                         <li>

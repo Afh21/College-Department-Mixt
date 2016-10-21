@@ -23,7 +23,7 @@
 
                             <li data-id="{{$period->id}}" style="display: inline-block; padding-left: 10px">
                                 <a href="{{route('destroy', $period->id)}}" class="btn-floating waves-circle deep-orange darken-1 tooltiped delete" data-position="bottom" data-delay="50" data-tooltip="Eliminar">
-                                    <i class="fa fa-times-circle" style="color:white"></i>
+                                    <i class="fa fa-times" style="color:white"></i>
                                 </a>
                             </li>
                             <li class="right" data-id="{{$period->id}}" style="display: inline-block; padding-left: 10px">
@@ -45,7 +45,8 @@
         @endforeach
     </div>
 
-    @include('dashboard.views.periods.formEdit')
+    @include('dashboard.views.periods.formEdit');
+    @include('dashboard.views.periods.formCreatePeriod');
 
 @endsection
 
@@ -69,7 +70,6 @@
                    alert('Fallo la consulta');
                 });
             });
-
             $('button.updatePeriod').click(function (){
                 var id          = $('button.updatePeriod').attr('data-id');
                 var routeUpd    = "http://localhost:8000/periods/"+id+" ";
@@ -93,7 +93,32 @@
 
             })
 
+            $('.createPeriod').click(function (){
+                $('#modalCreatePeriod').openModal();
 
+                $('.sendFormCreatePeriod').click(function (){
+                    var rout = 'http://localhost:8000/periods/save';
+                    var token= $('#tokenCreatePeriod').attr('value');
+                    var data = $('#formCreatePeriod').serialize();
+
+                    $.ajax({
+                        url:        rout,
+                        datatype:   'json',
+                        type:       'POST',
+                        headers:    {'X-CSRF-TOKEN': token},
+                        data:       data,
+                        success: function(res){
+                            $('#modalCreatePeriod').closeModal();
+                            Materialize.toast(res.msn, 10000);
+                            window.location.href = 'http://localhost:8000/dashboard/periods';
+                        }, fail: function(){
+                            alert('Fallo el envio de datos');
+                            window.location.href = 'http://localhost:8000/dashboard/periods';
+                        }
+                    });
+
+                })
+            });
 
         });
     </script>

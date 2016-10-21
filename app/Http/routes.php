@@ -30,17 +30,14 @@ Route::group(['middleware' => 'auth'], function (){
        'uses' => 'DashboardController@getAdmins',
         'as'  => 'admins'
     ]);
-
     Route::get('/admins/find/{id}', [
        'uses' => 'DashboardController@find',
         'as'  => 'find'
     ]);
-
     Route::put('/admins/find/{id}/update', [
        'uses' => 'DashboardController@updateAdmin',
         'as'  => 'update'
     ]);
-
     Route::post('/admins/save', [
        'uses' => 'DashboardController@saveAdmin',
         'as'  => 'save'
@@ -50,19 +47,23 @@ Route::group(['middleware' => 'auth'], function (){
        'uses' => 'DashboardController@getPeriods',
         'as'  => 'periods'
     ]);
-
     Route::get('/periods/{id}/destroy', [
        'uses' => 'PeriodController@destroy',
         'as'  => 'destroy'
     ]);
-
     Route::get('/periods/{id}/find', [
         'uses'  => 'PeriodController@find',
         'as'    => 'find'
     ]);
-
     Route::put('/periods/{id}', [
        'uses'   => 'PeriodController@update',
         'as'    => 'update'
     ]);
+    Route::post('/periods/save', ['uses' => 'PeriodController@save','as' => 'save']);
+
+    Route::get('/dashboard/maths', 'DashboardController@getMaths')->name('maths');
+    Route::post('/maths/save', ['uses' => 'MathController@save', 'as' => 'save']);
+    Route::get('/maths/{id}/destroy', ['uses' => 'MathController@destroy', 'as' => 'destroy']);
+    Route::get('/maths/{id}/find', ['uses' => 'MathController@find', 'as' => 'find']);
+    Route::post('/maths/{id}', ['uses' => 'MathController@update', 'as' => 'update']);
 });

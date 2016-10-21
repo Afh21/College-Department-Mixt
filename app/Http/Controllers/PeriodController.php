@@ -36,7 +36,18 @@ class PeriodController extends Controller
                'msn' => 'Actualizacion exitosa'
             ]);
         }
+    }
 
+    public function save(Request $request){
+        if($request->ajax()) {
 
+            $period = new Period();
+            $period->period_name = $request->create;
+            $period->save();
+
+            return response()->json([
+                'msn' => 'Periodo creado exitosamente'
+            ]);
+        }
     }
 }
