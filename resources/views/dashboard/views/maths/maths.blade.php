@@ -8,8 +8,9 @@
                 <table class="bordered">
                     <thead>
                     <tr>
-                        <th data-field="id">Codigo</th>
-                        <th data-field="name">Nombre</th>
+                        <th data-field="id">    Codigo</th>
+                        <th data-field="name">  Nombre</th>
+                        <th data-field="peirod">Periodos</th>
                     </tr>
                     </thead>
                     <style>
@@ -22,6 +23,16 @@
                             <tr data-id="{{$math->id}}">
                                 <td>{!! $math->math_code !!}</td>
                                 <td>{!! $math->math_name !!}</td>
+                                @if($math->periods()->count() > 0 )
+
+                                <td>
+                                    Periodos:
+                                    @foreach($math->periods as $period)
+                                        <span class="chip"> {!! $period->period_name !!} </span>
+                                    @endforeach
+                                </td>
+
+                                @endif
                                 <td>
                                     <ul>
                                         <li style="display: inline" data-id="{{$math->id}}">
@@ -48,8 +59,21 @@
 
 @section('js')
     <script>
+        $(document).ready(function (){
+
+        $('.chips').material_chip();
         $('.tooltiped').tooltip();
         $('.modal-trigger').leanModal({dismissible: false});
+        $('select').material_select();
+
+
+        $.get("http://localhost:8000/maths/periods", function(){
+        }).success(function(res){
+            $(res.msn).each(function(key){
+                $('select#periods').append("<option value="+res.msn[key].id+" > "+res.msn[key].period_name+" </option>");
+            });
+            $('select#periods').material_select();
+        });
 
         $('button.createMath').click(function () {
             $('#modalCreateMath').openModal();
@@ -68,7 +92,6 @@
                     success: function (res) {
                         $('#modalCreateMath').closeModal();
                         Materialize.toast(res.msn, 20000);
-                        $('#modalCreateMath').closeModal();
                         window.location.href = 'http://localhost:8000/dashboard/maths';
                     }, fail: function () {
                         alert('Fallo el envio de datos');
@@ -99,8 +122,25 @@
 
             var id = $(this).parent('li').attr('data-id');
             var data = $('#formEditMath').serialize();
-            alert(id);
+            var rout = "http://localhost:8000/maths/"+id+" ";
+            var token= $('#tokenEditMath').val();
+
+            $.ajax({
+                url: rout,
+                dataType: 'json',
+                headers: {'X-CSRF-TOKEN': token},
+                type: 'PUT',
+                data: data,
+                success: function (res) {
+                    Materialize.toast(res.msn, 10000);
+                    $('#modalEditMath').closeModal();
+                    window.location.href = 'http://localhost:8000/dashboard/maths';
+                }, fail: function (){
+                    alert('Fallo la actualizacion de Datos');
+                }
+            })
         })
 
+        })
     </script>
 @endsection

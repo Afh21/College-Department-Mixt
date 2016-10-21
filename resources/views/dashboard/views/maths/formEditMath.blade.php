@@ -13,7 +13,7 @@
 
         <div class="row">
             <form class="col l8 push-l2" id="formEditMath">
-                <input type="hidden" id="tokenCreateMath" name="_token" value="{{csrf_token()}}">
+                <input type="hidden" id="tokenEditMath" name="_token" value="{{csrf_token()}}">
                 <div class="row">
                     <div class="input-field col l6">
                         <i class="fa fa-angle-right prefix"></i>
@@ -22,6 +22,14 @@
                     <div class="input-field col l6">
                         <i class="fa fa-angle-right prefix"></i>
                         <input id="updname" type="text" class="validate" name="name">
+                    </div>
+                    <div class="input-field col l8 push-l2">
+                        <div class="input-field col l12">
+                            <select multiple id="periods" name="periods[]">
+
+                            </select>
+                            <label>Por favor seleccione algun periodo</label>
+                        </div>
                     </div>
                 </div>
             </form>

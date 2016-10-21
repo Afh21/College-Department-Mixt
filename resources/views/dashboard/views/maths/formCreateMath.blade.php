@@ -25,6 +25,14 @@
                         <input id="name" type="text" class="validate" name="name">
                         <label for="name">Nombre de la Materia </label>
                     </div>
+                    <div class="input-field col l8 push-l2">
+                        <div class="input-field col l12">
+                            <select multiple id="periods" name="periods[]">
+
+                            </select>
+                            <label>Por favor seleccione algun periodo</label>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
