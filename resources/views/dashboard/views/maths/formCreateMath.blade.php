@@ -1,12 +1,8 @@
 <div id="modalCreateMath" class="modal">
 
     <style>
-        .modal .modal-content{
-            padding: 0px !important;
-        }
-        .modal .modal-footer {
-            padding: 0px;
-        }
+        .modal .modal-content{ padding: 0px !important; }
+        .modal .modal-footer { padding: 0px; }
     </style>
 
     <div class="modal-content">

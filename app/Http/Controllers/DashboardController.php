@@ -8,6 +8,7 @@ use App\User;
 use App\Role;
 use App\Period;
 use App\Math;
+use App\Group;
 use DB;
 
 class DashboardController extends Controller
@@ -45,6 +46,11 @@ class DashboardController extends Controller
         return view('dashboard.views.maths.maths')->with('math', $math);
     }
 
+    public function getGroups(){
+        $group = Group::orderBy('group_code', 'ASC')->get();
+
+        return view('dashboard.views.groups.groups')->with('group', $group);
+    }
 
     public function find($id){
         $user = User::find($id);

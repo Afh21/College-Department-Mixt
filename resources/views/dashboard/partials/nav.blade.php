@@ -70,8 +70,15 @@
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="{{route('groups')}}">
                                 <i class="fa fa-navicon left"></i> Grupos
+                                @if(!Route::is('groups'))
+                                    <button disabled class="btn-floating btn-flat btn-xs waves-effect waves-light grey lighten-1  right tooltiped" style="display: inherit; vertical-align: middle; margin-top: 4px" data-tooltip="Crear Grupo" data-delay="50" data-position="right">
+                                        <i class="fa fa-plus" style="color:white"></i> </button>
+                                @else
+                                    <button class="btn-floating btn-flat btn-xs waves-effect waves-light grey lighten-1  right modal-trigger createGroup tooltiped" style="display: inherit; vertical-align: middle; margin-top: 4px" data-target="modalCreateGroup" data-tooltip="Crear Grupo" data-delay="50" data-position="right">
+                                        <i class="fa fa-plus" style="color:black"></i> </button>
+                                @endif
                             </a>
                         </li>
                     </ul>

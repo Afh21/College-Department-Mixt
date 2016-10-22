@@ -18,7 +18,9 @@ class MathController extends Controller
             $math->math_name = $request->name;
             $math->save();
 
-            $math->periods()->attach($request->periods);
+            if($request->periods){
+                $math->periods()->attach($request->periods);
+            }
 
             return response()->json([
                 'msn' => 'Materia creada exitosamente'
@@ -46,7 +48,6 @@ class MathController extends Controller
             $math->periods()->sync($request->periods);
         }
 
-
         return response()->json([
            'msn' => 'Datos actualizados exitosamente'
         ]);
@@ -58,6 +59,17 @@ class MathController extends Controller
         return response()->json([
            'msn' => $period
         ]);
+    }
+
+    public function destroy($id){
+        $math = Math::find($id);
+        $math->delete();
+
+        if($math->periods()){
+            $math->periods()->detach();
+        }
+
+        return redirect()->back();
     }
 
 

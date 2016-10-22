@@ -14,9 +14,7 @@
                     </tr>
                     </thead>
                     <style>
-                        td {
-                            padding: 0px;
-                        }
+                        td { padding: 0px; }
                     </style>
                     <tbody>
                         @foreach($math as $math)
@@ -55,6 +53,7 @@
 
     @include('dashboard.views.maths.formCreateMath')
     @include('dashboard.views.maths.formEditMath')
+
 @endsection
 
 @section('js')
@@ -65,7 +64,6 @@
         $('.tooltiped').tooltip();
         $('.modal-trigger').leanModal({dismissible: false});
         $('select').material_select();
-
 
         $.get("http://localhost:8000/maths/periods", function(){
         }).success(function(res){
