@@ -15,11 +15,11 @@ class AddGroupMathTable extends Migration
         Schema::create('group_math', function(Blueprint $table){
             $table->increments('id');
 
-            $table->integer('group_id', false, true);
-            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
-
             $table->integer('math_id', false, true);
             $table->foreign('math_id')->references('id')->on('maths')->onDelete('cascade');
+
+            $table->integer('group_id', false, true);
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
 
             $table->timestamps();
         });

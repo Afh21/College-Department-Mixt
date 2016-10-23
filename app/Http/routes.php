@@ -41,5 +41,10 @@ Route::group(['middleware' => 'auth'], function (){
     Route::put('/maths/{id}',           ['uses' => 'MathController@update', 'as' => 'update']);
     Route::get('/maths/periods',        ['uses' => 'MathController@periods', 'as' => 'mathperiod']);
 
-    Route::get('dashboard/groups', 'DashboardController@getGroups')->name('groups');
+    Route::get('dashboard/groups',      'DashboardController@getGroups')->name('groups');
+    Route::get('/groups/maths',         'GroupController@maths');
+    Route::post('/groups/save',         'GroupController@save');
+    Route::get('/groups/{id}/destroy',  'GroupController@destroy')->name('groups.destroy');
+    Route::get('/groups/{id}/find',     'GroupController@find')->name('group.find');
+    Route::put('/groups/{id}',          'GroupController@update');
 });

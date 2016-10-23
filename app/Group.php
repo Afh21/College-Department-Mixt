@@ -8,7 +8,7 @@ class Group extends Model
 {
     protected $table = 'groups';
 
-    protected $guarded = ['group_state'];
+    protected $guarded = ['group_assigned'];
 
     //Relaciones
 

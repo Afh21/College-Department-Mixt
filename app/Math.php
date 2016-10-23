@@ -13,7 +13,7 @@ class Math extends Model
     //Relaciones
 
     // Muchos a Muchos - Materias & Grupos
-    public function groups(){
+    public function MathGroups(){
         return $this->belongsToMany('App\Group', 'group_math', 'math_id', 'group_id');
     }
 
