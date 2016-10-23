@@ -48,9 +48,20 @@ class DashboardController extends Controller
 
     public function getGroups(){
         $group = Group::orderBy('group_code', 'ASC')->get();
-
         return view('dashboard.views.groups.groups')->with('group', $group);
     }
+
+    public function extras(){
+        $group = Group::orderBy('group_code', 'ASC')->get();
+        $math  = Math::orderBy('math_code', 'ASC')->get();
+        return response()->json([
+            'msn'  => $group,
+            'math' => $math
+        ]);
+    }
+
+
+
 
     public function find($id){
         $user = User::find($id);
@@ -101,9 +112,10 @@ class DashboardController extends Controller
 
     public function saveAdmin(Request $request){
         if($request->ajax()){
+
             $rol = Role::find($request->group1);
 
-            $user = new User;
+            $user = new User();
             $user->user_type    = $request->user_type;
             $user->user_identity= $request->cc;
             $user->name         = $request->nombre;
@@ -117,8 +129,26 @@ class DashboardController extends Controller
             $user->user_phone   = $request->telefono;
             $user->user_blood   = $request->rh;
             $user->user_profession = $request->profesion;
+
+            if($request->group1 == 3){
+                $group = Group::find($request->groups1);
+                //dd($group);
+                $group->GroupStudents()->save($user);
+            }
+
             $user->save();
+
             $user->attachRole($rol);
+
+            if($request->group1 == 2){
+
+                if($request->groupsTeachersMultiple) {
+                        $user->TeacherGroups()->attach($request->groupsTeacherMultiple);
+                    }
+                if($request->mathsTeacherMultiple) {
+                        $user->TeacherMaths()->attach($request->mathsTeacherMultiple);
+                    }
+            }
 
             return response()->json([
                'msn' => 'Usuario creado exitosamente'

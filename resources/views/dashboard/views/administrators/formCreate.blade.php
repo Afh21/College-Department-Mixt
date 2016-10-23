@@ -28,6 +28,26 @@
                     </div>
                 </div>
 
+                <div class="col l6 push-l3 groups">
+                    <select name="groups" id="groups">
+                        <option value="" disabled selected> Seleccione un grupo</option>
+                    </select>
+                </div>
+
+                <div class="col l12 groupsTeacher">
+                    <div class="input-field col l6">
+                        <select multiple name="groupsTeachersMultiple" id="groupsMultiple">
+                            <option value="" disabled selected> Seleccione algun grupo</option>
+                        </select>
+                    </div>
+                    <div class="input-field col l6">
+                        <select multiple name="mathsTeacherMultiple" id="mathMultiple">
+                            <option value="" disabled selected> Seleccione alguna materia</option>
+                        </select>
+                    </div>
+                </div>
+
+
                 <div class="col l12 s12">
                     <div class=" input-field col s6 l6">
                         <select id="user_type" name="user_type">
