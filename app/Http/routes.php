@@ -27,7 +27,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/admins/find/{id}',         ['uses' => 'DashboardController@find','as'  => 'find']);
     Route::put('/admins/find/{id}/update',  ['uses' => 'DashboardController@updateAdmin','as'  => 'update']);
     Route::post('/admins/save',             ['uses' => 'DashboardController@saveAdmin','as'  => 'save']);
-    Route::get('/extras',   'DashboardController@extras');
+    Route::get('/extras',                   'DashboardController@extras');
 
     Route::get('/dashboard/periods',    ['uses' => 'DashboardController@getPeriods', 'as'  => 'periods']);
     Route::get('/periods/{id}/destroy', ['uses' => 'PeriodController@destroy','as'  => 'destroy']);

@@ -28,7 +28,7 @@ class Group extends Model
     }
 
     // Se activa para agregar estudiantes al Grupo
-    public function GroupStudents(){
+    public function students(){
         return $this->hasMany('App\User', 'group_id');
     }
 

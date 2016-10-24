@@ -11,7 +11,7 @@
                             </div>
                             <div class="card-content center">
                                 @role('administrator') <i class="fa fa-diamond"></i> @endrole{{$admin->name}}
-                                <span> <b>{{$admin->user_lastname}}</b></span>
+                                <span> <b>{{$admin->user_lastname}}</b></span> <br>
                                 <span style="font-size: 12px"> {{$admin->email}} </span>
                                 <span class="right"> @if($admin->user_state == 'enabled') <i class="fa fa-circle tooltiped circle" style="color: #4caf50;box-shadow: 2px 1px 6px 4px #00b0ff " data-position="right" data-delay="50" data-tooltip="Activo"></i> @else <i class="fa fa-circle tooltiped" style="color: #424242 " data-position="right" data-delay="50" data-tooltip="Inactivo"></i> @endif</span>
                             </div>
@@ -79,8 +79,8 @@
                         dataType: 	'json',
                         data:        data,
                         success: function(res) {
-                            alert('Registro exitoso');
-                            window.href.location = 'http://localhost:8000/admins';
+                            Materialize.toast(res.msn, 5000);
+                            window.location.href = 'http://localhost:8000/admins';
                         },
                         fail: function (){
                             alert('No se completo el registro');

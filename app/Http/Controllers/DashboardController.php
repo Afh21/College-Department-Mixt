@@ -113,8 +113,6 @@ class DashboardController extends Controller
     public function saveAdmin(Request $request){
         if($request->ajax()){
 
-            $rol = Role::find($request->group1);
-
             $user = new User();
             $user->user_type    = $request->user_type;
             $user->user_identity= $request->cc;
@@ -130,15 +128,16 @@ class DashboardController extends Controller
             $user->user_blood   = $request->rh;
             $user->user_profession = $request->profesion;
 
-            if($request->group1 == 3){
-                $group = Group::find($request->groups1);
-                //dd($group);
-                $group->GroupStudents()->save($user);
+            if($request->group1 == 3) {
+                $group = Group::find($request->groups);
+                $group->students()->save($user);
             }
 
             $user->save();
 
+            $rol = Role::find($request->group1);
             $user->attachRole($rol);
+
 
             if($request->group1 == 2){
 
@@ -150,8 +149,10 @@ class DashboardController extends Controller
                     }
             }
 
+
+
             return response()->json([
-               'msn' => 'Usuario creado exitosamente'
+               'msn' => 'Usuario registrado exitosamente'
             ]);
         }
     }
