@@ -31,10 +31,11 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('destroy/{id}/user', 'DashboardController@destroy')->name('destroy.user');
 
     Route::get('/dashboard/periods',    ['uses' => 'DashboardController@getPeriods', 'as'  => 'periods']);
-    Route::get('/periods/{id}/destroy', ['uses' => 'PeriodController@destroy','as'  => 'destroy']);
+    Route::get('/periods/{id}/destroy', ['uses' => 'PeriodController@destroy','as'  => 'destroyP']);
     Route::get('/periods/{id}/find',    ['uses'  => 'PeriodController@find', 'as' => 'find']);
     Route::put('/periods/{id}',         ['uses' => 'PeriodController@update', 'as' => 'update']);
     Route::post('/periods/save',        ['uses' => 'PeriodController@save','as' => 'save']);
+    Route::put('/periods/{id}/state',   ['uses' => 'PeriodController@updateStatePeriod', 'as' => 'state']);
 
     Route::get('/dashboard/maths', 'DashboardController@getMaths')->name('maths');
     Route::post('/maths/save',          ['uses' => 'MathController@save', 'as' => 'save']);

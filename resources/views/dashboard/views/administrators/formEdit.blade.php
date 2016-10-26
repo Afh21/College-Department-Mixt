@@ -9,16 +9,12 @@
             <input type="hidden" name="_token" id="token" value="{{csrf_token()}}">
             <div class="row">
 
+                <div class="col l12 center" id="GroupStudentRelation">
+                    Grupo: <a type="button" class="btn-floating red waves-effect waves-circle tooltiped" style="margin-right: 10px; margin-left: 10px" id="UpdateGroupStudent" data-tooltip="Editar Grupo" data-possition="buttom" data-delay="50">
+                        <i class="fa fa-refresh"></i> </a> <span class="chip" id="grupoEstudiante"></span>
+                </div>
                 <div class="input-field col l12 groupsChange center" style="display: none">
                     <ul style="list-style-type:none" id="typeUser">
-                        {{--<li style="display:inline">
-                            <input name="editgroup1" type="radio" id="testad" value="1" />
-                            <label for="testad">Administrador</label>
-                        </li>
-                        <li style="display:inline">
-                            <input name="editgroup1" type="radio" id="testes" value="3" />
-                            <label for="testes">Estudiante</label>
-                        </li>--}}
                     </ul>
                 </div>
 

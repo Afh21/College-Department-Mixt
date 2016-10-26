@@ -39,7 +39,7 @@ class DashboardController extends Controller
 
 
     public function getPeriods(){
-        $periods = Period::orderBy('id', 'ASC')->get();
+        $periods = Period::orderBy('period_name', 'ASC')->get();
 
         return view('dashboard.views.periods.periods')->with('periods', $periods);
     }
@@ -124,7 +124,7 @@ class DashboardController extends Controller
                 if($request->disabled)  { $user->user_state = 'disabled';}
 
             // Si es profesor
-            if($request->editgroup1 == "2"){
+            if($request->editgroup1 == "2" && $request->groupsTeachersMultipleProfe != "" && $request->mathsTeacherMultipleProfe != ""){
 
                 if($user->TeacherGroups || $user->TeacherMaths){
                     $user->TeacherGroups()->detach();
@@ -150,7 +150,7 @@ class DashboardController extends Controller
 
 
             // Si es estudiante
-            if($request->editgroup1 == "3"){
+            if($request->editgroup1 == "3" && $request->groupsTeachersMultipleStudent != ""){
                 $group = Group::find($request->groupsTeachersMultipleStudent);
                 if($user->TeacherGroups || $user->TeacherMaths){
                     $user->TeacherGroups()->detach();
@@ -160,7 +160,6 @@ class DashboardController extends Controller
                 $user->user_state = 'enabled';
                 $group->save();
 
-                $user->save();
 
                 $rol = Role::find($request->editgroup1);
                 $user->roles()->detach();
@@ -186,8 +185,18 @@ class DashboardController extends Controller
 
             }
 
+            // Estudiante actual
+            if($request->groupsTeachersMultipleStudent){
+                $group = Group::find($request->groupsTeachersMultipleStudent);
+                $user->group()->dissociate();
+                $group->students()->save($user);
+                $group->save();
+            }
+
+            $user->save();
+
             // Se quiere editar un profesor actual
-            if($request->editgroup1 != "3" || $request->editgroup1 != "2") {
+            if($request->editgroup1 != "3" && $request->editgroup1 != "1") {
                 if($user->TeacherGroups()->count() > 0 && $request->groupsTeachersMultipleProfe) {
                         $user->TeacherGroups()->sync($request->groupsTeachersMultipleProfe);
                 } else {
@@ -200,6 +209,8 @@ class DashboardController extends Controller
                     $user->TeacherMaths()->attach($request->mathsTeacherMultipleProfe);
                 }
             }
+
+
 
             return response()->json([
                 'msn' => 'Datos actualizados exitosamente'
@@ -241,32 +252,18 @@ class DashboardController extends Controller
                 $user->TeacherMaths()->attach($request->mathsTeacherMultiple);
             }
 
-            return response()->json([
-               'msn' => 'Usuario registrado exitosamente'
-            ]);
+            return response()->json([ 'msn' => 'Usuario registrado exitosamente' ]);
         }
     }
 
     public function destroy($id){
         $user = User::find($id);
-
-        if($user->group()){
-            $user->group()->dissociate();
-        }
-
+            if($user->group()){ $user->group()->dissociate(); }
         $user->delete();
 
-        if($user->roles()){
-            $user->roles()->detach();
-        }
-
-        if($user->TeacherGroups()){
-            $user->TeacherGroups()->detach();
-        }
-
-        if($user->TeacherMaths()){
-            $user->TeacherMaths()->detach();
-        }
+        if($user->roles())        { $user->roles()->detach();        }
+        if($user->TeacherGroups()){ $user->TeacherGroups()->detach();}
+        if($user->TeacherMaths()) { $user->TeacherMaths()->detach(); }
 
         return redirect()->back();
     }

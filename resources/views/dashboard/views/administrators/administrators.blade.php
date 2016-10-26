@@ -131,21 +131,22 @@
                        if(res.role[key].slug == 'administrator') {
                            $('h3#title').append("<i class='fa fa-diamond'></i>").css({"text-align": "center", "color": "#E5E4E2"});
                            $('span#username h5').append(" Administrador ").css({"text-transform": "capitalize"});
-                           $('ul#typeUser').append('<li style="display:inline"><input name="editgroup1" type="radio" id="testad" value="2" /><label for="testad">Teacher</label></li><li style="display:inline"><input name="editgroup1" type="radio" id="testade" value="3" /><label for="testade">Estudiante</label></li>');
+                           $('ul#typeUser').append('<li style="display:inline"><input name="editgroup1" type="radio" id="testad" value="2" /><label for="testad">Profesor</label></li><li style="display:inline; margin-left: 10px"><input name="editgroup1" type="radio" id="testade" value="3" /><label for="testade">Estudiante</label></li>');
                        }
                        else if(res.role[key].slug == 'teacher') {
                            $('h3#title').append("<i class='fa fa-graduation-cap'></i>").css({"text-align": "center", "color": "#E5E4E2"});
                            $('span#username h5').append(" Profesor ").css({"text-transform": "capitalize"});
-                           $('ul#typeUser').append('<li style="display:inline"><input name="editgroup1" type="radio" id="testad" value="1" /><label for="testad">Administrador</label></li><li style="display:inline"><input name="editgroup1" type="radio" id="testade" value="3" /><label for="testade">Estudiante</label></li>');
+                           $('ul#typeUser').append('<li style="display:inline"><input name="editgroup1" type="radio" id="testad" value="1" /><label for="testad">Administrador</label></li><li style="display:inline; margin-left: 10px"><input name="editgroup1" type="radio" id="testade" value="3" /><label for="testade">Estudiante</label></li>');
                        }
                        else {
                            $('h3#title').append("<i class='fa fa-child'></i>").css({"text-align": "center", "color": "#E5E4E2"});
                            $('span#username h5').append(" Estudiante ").css({"text-transform": "capitalize"});
-                           $('ul#typeUser').append('<li style="display:inline"><input name="editgroup1" type="radio" id="testad" value="1" /><label for="testad">Administrador</label></li><li style="display:inline"><input name="editgroup1" type="radio" id="testade" value="2" /><label for="testade">Profesor</label></li>');
+                           $('ul#typeUser').append('<li style="display:inline"><input name="editgroup1" type="radio" id="testad" value="1" /><label for="testad">Administrador</label></li><li style="display:inline; margin-left: 10px"><input name="editgroup1" type="radio" id="testade" value="2" /><label for="testade">Profesor</label></li>');
                        }
                     });
 
                     $('.GroupMathEdit').hide();
+                    $('#GroupStudentRelation').hide();
                     if(res.group && res.math){
                         $('.GroupMathEdit').show();
                         $(res.group).each(function (key){
@@ -154,6 +155,9 @@
                         $(res.math).each(function (ind){
                             $('#mathsRelation ').append("<span class='chip center'> "+res.math[ind].math_name+" </span>");
                         })
+                    }else if(res.grupo){
+                        $('#GroupStudentRelation').show();
+                        $('#grupoEstudiante').append(res.grupo);
                     }
 
                     if(res.user.user_type == 'CC'){ $('#typeId').focus().val('Cedula de Ciudadanía'); }
@@ -184,6 +188,10 @@
                 }).fail(function(){
                     alert('No se envio nada');
                 });
+            });
+
+            $('#UpdateGroupStudent').click(function (){
+                $('.groupsTeacherClick').show();
             });
 
 
@@ -249,33 +257,56 @@
             $('div.changeUser')
                     .mouseover(function(){
                         $(this).find('h3').css({"color": "black"});
-                        $(this).click(function (){
-                            $('.groupsChange').show();
-                            $('ul#typeUser li input').each( function (){
-                                $(this).click(function () {
-                                    var id = $(this).attr('value');
+                        $(this)
+                                .click(function (){
+                                    $('.groupsChange').show();
+                                    $('ul#typeUser li input').each( function (){
 
-                                    if(id == 1){
+                                        $(this).click(function () {
+                                            var id = $(this).attr('value');
+                                            //alert(id);
+
+                                            if(id == 1){
+                                                $('.GroupMathEdit').hide();
+                                                $('.groupsTeacherClick').hide();
+                                                $('.groupsTeacher').hide();
+                                            }else if(id == 3) {
+                                                $('.GroupMathEdit').hide();
+                                                $('.groupsTeacherClick').show();
+                                                $('.groupsTeacher').hide();
+                                            }
+                                            else {
+                                                $('#GroupStudentRelation').hide();
+                                                $('.groupsTeacher').show();
+                                                $('.groupsTeacherClick').hide();
+                                            }
+                                        })
+                                    })
+                                })
+                                .dblclick(function (){
+                                    var i = $(this).find('i').attr('class');
+                                    var button = $(this).find('i');
+                                    //alert(i);
+
+                                    if(i == 'fa fa-child'){
                                         $('.GroupMathEdit').hide();
-                                        $('.groupsTeacherClick').hide();
-                                        $('.groupsTeacher').hide();
-                                    }else if(id == 3) {
-                                        $('.GroupMathEdit').hide();
-                                        $('.groupsTeacherClick').show();
+                                        $('#GroupStudentRelation').show();
+                                        $('.groupsChange').hide();
                                         $('.groupsTeacher').hide();
                                     }
-                                })
-                            })
-                        });
-                        $(this).dblclick(function (){
-                            $('.groupsChange').hide();
-                            $('.groupsTeacherClick').hide();
-                            $('.GroupMathEdit').show();
-                        });
+                                     else if(i == 'fa fa-graduation-cap'){
+                                        $('.GroupMathEdit').show();
+                                        $('.groupsChange').hide();
+                                     }
+                                     else if(i == 'fa fa-diamond') {
+                                         $('.groupsChange').hide();
+                                         $('.groupsTeacherClick').hide();
+                                         $('.GroupMathEdit').hide();
+                                     }
+                                });
                     })
                     .mouseout(function (){
                         $(this).find('h3').css({"color": "#E5E4E2"});
-
                     });
 
 

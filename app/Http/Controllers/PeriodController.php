@@ -20,6 +20,10 @@ class PeriodController extends Controller
         $period = Period::find($id);
         $period->delete();
 
+        if($period->maths()){
+            $period->maths()->detach();
+        }
+
         return redirect()->back();
     }
 
@@ -49,5 +53,24 @@ class PeriodController extends Controller
                 'msn' => 'Periodo creado exitosamente'
             ]);
         }
+    }
+
+    public function updateStatePeriod(Request $request, $id){
+
+        if($request->ajax()){
+            //dd($request->all());
+
+            if($request->per == 0){
+                Period::where('id', $id)->where('period_state', 0)->update(['period_state' => true]);
+            }
+            if($request->per == 1){
+                Period::where('id', $id)->where('period_state', 1)->update(['period_state' => false]);
+            }
+
+            return response()->json([
+                'msn' => 'Estado cambiado exitosamente'
+            ]);
+        }
+
     }
 }

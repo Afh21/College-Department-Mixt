@@ -16,26 +16,30 @@
                         <ul style="padding: 0px 20px">
 
                             <li data-id="{{$period->id}}" style="display: inline-block; padding-left: 10px">
-                                <button class="btn-floating waves-circle lime accent-2 tooltiped modal-trigger editPeriod" data-target="modalEditPeriod" data-id="{{$period->id}}" data-position="bottom" data-delay="50" data-tooltip="Editar">
+                                <button class="btn-floating waves-circle white tooltiped modal-trigger editPeriod" data-target="modalEditPeriod" data-id="{{$period->id}}" data-position="bottom" data-delay="50" data-tooltip="Editar">
                                     <i class="fa fa-edit" style="color:black"></i>
                                 </button>
                             </li>
 
                             <li data-id="{{$period->id}}" style="display: inline-block; padding-left: 10px">
-                                <a href="{{route('destroy', $period->id)}}" class="btn-floating waves-circle deep-orange darken-1 tooltiped delete" data-position="bottom" data-delay="50" data-tooltip="Eliminar">
-                                    <i class="fa fa-times" style="color:white"></i>
+                                <a href="{{route('destroyP', $period->id)}}" class="btn-floating waves-circle white tooltiped delete" data-position="bottom" data-delay="50" data-tooltip="Eliminar">
+                                    <i class="fa fa-times" style="color:black"></i>
                                 </a>
                             </li>
                             <li class="right" data-id="{{$period->id}}" style="display: inline-block; padding-left: 10px">
-                                @if(!$period->period_state == 0)
-                                    <button class="btn-floating waves-circle white tooltiped " data-tooltip="Activo" data-delay="50" data-position="right">
-                                        <i class="fa fa-thumbs-up " style="color:#4caf50 "></i>
-                                    </button>
-                                @else
-                                    <button class="btn-floating waves-circle white tooltiped" data-tooltip="Inactivo" data-delay="50" data-position="right">
-                                        <i class="fa fa-thumbs-down" style="color:#bdbdbd " ></i>
-                                    </button>
-                                @endif
+                                <form action="" id="pd">
+                                    <input type="hidden" name="_token" value="{{csrf_token()}}" id="tokenPeriod">
+                                    <input type="hidden" name="per" id="updatePeriodo">
+                                    @if($period->period_state != 0)
+                                        <a type="buttom" class="btn-floating waves-circle white tooltiped updatePeriodState" value="1" data-tooltip="Activo" data-delay="50" data-position="right">
+                                            <i class="fa fa-thumbs-up " style="color:black "></i>
+                                        </a>
+                                    @else
+                                        <a type="buttom" class="btn-floating waves-circle white tooltiped updatePeriodState" value="0" data-tooltip="Inactivo" data-delay="50" data-position="right">
+                                            <i class="fa fa-thumbs-down" style="color:lightgray " ></i>
+                                        </a>
+                                    @endif
+                                </form>
                             </li>
 
                         </ul>
@@ -45,8 +49,8 @@
         @endforeach
     </div>
 
-    @include('dashboard.views.periods.formEdit');
-    @include('dashboard.views.periods.formCreatePeriod');
+    @include('dashboard.views.periods.formEdit')
+    @include('dashboard.views.periods.formCreatePeriod')
 
 @endsection
 
@@ -55,6 +59,36 @@
         $(document).ready(function(){
             $('.tooltiped').tooltip();
             $('.modal-trigger').leanModal({dismissible: false});
+
+
+            $('a.updatePeriodState').click(function (){
+                var id = $(this).parents('li').attr('data-id');
+                var val = $(this).attr('value');
+                var input = $('#updatePeriodo').attr('value', val);
+                var token = $('#tokenPeriod').val();
+                var route = "http://localhost:8000/periods/"+id+"/state";
+                var data = input;
+
+                //alert(route);
+
+                $.ajax({
+                    url: route,
+                    headers: {'X-CSRF-TOKEN': token},
+                    dataType: 'json',
+                    type: 'PUT',
+                    data: data,
+                    success: function (res){
+                        Materialize.toast(res.msn, 20000);
+                        window.location.href = 'http://localhost:8000/dashboard/periods';
+                    }, fail: function (){
+                        alert('Se pudo completar la operacion');
+                    }
+                });
+            });
+
+
+
+
 
             $('button.modal-trigger.editPeriod').click(function(){
 
@@ -119,6 +153,7 @@
 
                 })
             });
+
 
         });
     </script>
