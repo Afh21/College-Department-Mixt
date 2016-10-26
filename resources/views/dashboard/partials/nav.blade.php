@@ -17,8 +17,8 @@
     <li>
         <ul class="collapsible" data-collapsible="accordion">
             <li>
-                <a class="collapsible-header menu"> <i class="fa fa-users left"></i> Usuarios
-                    @if(!Route::is('admins'))
+                <a href="{{route('users')}}" class="collapsible-header menu"> <i class="fa fa-users left"></i> Usuarios
+                    @if(!Route::is('users'))
                         <button disabled class="btn-floating btn-flat btn-xs waves-effect waves-light grey lighten-1 right tooltiped" style="display: inherit; padding-left: 3px; vertical-align: middle; margin-top: 4px" data-tooltip="Crear Usuario" data-delay="50" data-position="right"> <i class="fa fa-plus"></i> </button>
                     @else
                         <button class="btn-floating btn-flat btn-xs waves-effect waves-light grey lighten-1 right modal-trigger create tooltiped" style="display: inherit; padding-left: 3px; vertical-align: middle; margin-top: 4px" data-target="modalCreate" data-tooltip="Crear Usuario" data-delay="50" data-position="right"> <i class="fa fa-plus" style="color: black"></i> </button>
@@ -26,9 +26,9 @@
                 </a>
 
                 <div class="collapsible-body">
-                   <ul>
+                   {{-- <ul>
                        <li>
-                           <a href="{{url('admins')}}">
+                           <a href="">
                                <i class="fa fa-diamond"></i> Administradores
                            </a>
                        </li>
@@ -43,7 +43,7 @@
                            </a>
                        </li>
                    </ul>
-                </div>
+                </div> --}}
             </li>
             <li>
                 <a class="collapsible-header"> <i class="fa fa-gears left"></i> Configuraciones  </a>

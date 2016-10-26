@@ -25,7 +25,6 @@
                                 <label for="test3">Estudiante</label>
                             </li>
                         </ul>
-                    </div>
                 </div>
 
                 <div class="col l6 push-l3 groups">
@@ -36,12 +35,12 @@
 
                 <div class="col l12 groupsTeacher">
                     <div class="input-field col l6">
-                        <select multiple name="groupsTeachersMultiple" id="groupsMultiple">
+                        <select multiple name="groupsTeachersMultiple[]" id="groupsMultiple">
                             <option value="" disabled selected> Seleccione algun grupo</option>
                         </select>
                     </div>
                     <div class="input-field col l6">
-                        <select multiple name="mathsTeacherMultiple" id="mathMultiple">
+                        <select multiple name="mathsTeacherMultiple[]" id="mathMultiple">
                             <option value="" disabled selected> Seleccione alguna materia</option>
                         </select>
                     </div>
