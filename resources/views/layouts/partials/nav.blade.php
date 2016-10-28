@@ -38,13 +38,13 @@
             <a href="{{url('/dashboard')}}">
                 <i class="fa fa-dashboard"></i> &nbsp; Dashboard
             </a>
-        @elseif(Auth::user()->is('student'))
-            <a href="">
-                <i class="fa fa-graduation"></i> &nbsp; Perfil
+        @elseif(Auth::user()->is('teacher'))
+            <a href="{{route('user.show', Auth::user()->id)}}">
+                <i class="fa fa-graduation"></i> &nbsp; Perfil Profesor
             </a>
         @else
             <a href="">
-                <i class="fa fa-child"></i> &nbsp; Perfil
+                <i class="fa fa-child"></i> &nbsp; Perfil Estudiante
             </a>
         @endif
     </li>

@@ -23,16 +23,16 @@ class DashboardController extends Controller
     }
 
     public function getUsers(){
-        /*$admin = User::load(['roles' => function ($query) {
-                $query->orderBy('level', 'DESC');
-        }])->get();*/
 
-        $admin = DB::table('role_user')
-                        ->join('users', 'role_user.user_id', '=', 'users.id')
-                        ->join('roles', 'role_user.role_id', '=', 'roles.id')
-                        ->select('roles.slug', 'users.name', 'users.user_lastname', 'users.email', 'users.user_state', 'users.id')
-                        ->orderBy('level', 'DESC')
-                        ->get();
+        $user = User::all();
+        $admin = $user->each(function ($query){
+            $query->roles()->each(function ($order) { $order->orderBy('level', 'ASC');  });
+
+            if($query->TeacherDirector){ $query->TeacherDirector; }
+            if($query->TeacherGroups && $query->TeacherMaths){ $query->TeacherGroups; $query->TeacherMaths; }
+            if($query->group){$query->group;}
+
+        });
 
         return view('dashboard.views.administrators.administrators')->with('admin', $admin);
     }
@@ -266,6 +266,12 @@ class DashboardController extends Controller
         if($user->TeacherMaths()) { $user->TeacherMaths()->detach(); }
 
         return redirect()->back();
+    }
+
+    public function show($id){
+        $user = User::find($id);
+
+        return view('dashboard.views.administrators.show')->with('user', $user);
     }
 
 

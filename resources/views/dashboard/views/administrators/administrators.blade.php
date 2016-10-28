@@ -1,7 +1,6 @@
 @extends('dashboard.app')
 
 @section('content')
-
         <div class="row">
             @foreach($admin as $admin)
                 <div class="col l4 s12 m7">
@@ -11,16 +10,28 @@
                         </div>
                         <div class="card-content center">
                             {{-- @role('administrator') <i class="fa fa-diamond"></i> soy admin  @endrole{{$admin->name}} --}}
-                                @if($admin->slug == 'administrator')
-                                    <i class="fa fa-diamond tooltiped" data-tooltip="Administrador" data-delay="50" data-possition="buttom"></i>
-                                @elseif($admin->slug == 'teacher')
-                                    <i class="fa fa-graduation-cap tooltiped" data-tooltip="Profesor" data-delay="50" data-possition="buttom"></i>
+                            @foreach($admin->roles as $role)
+                                @if($role->slug == 'administrator')
+                                    <button class="btn btn-floating white tooltiped" data-tooltip="Administrador" data-delay="50" data-possition="buttom">
+                                        <i class="fa fa-diamond" style="color:#00b8d4"></i>
+                                    </button>
+                                @elseif($role->slug == 'teacher')
+                                    <button class="btn btn-floating white tooltiped" data-tooltip="Profesor" data-delay="50" data-possition="buttom">
+                                        <i class="fa fa-graduation-cap" style="color:#00897b "></i>
+                                    </button>
                                 @else
-                                    <i class="fa fa-child tooltiped" data-tooltip="Estudiante" data-delay="50" data-possition="buttom"></i>
+                                    <button class="btn btn-floating white tooltiped" data-tooltip="Estudiante" data-delay="50" data-possition="buttom">
+                                        <i class="fa fa-child" style="color:#bcaaa4"></i>
+                                    </button>
                                 @endif
+                            @endforeach
                             <span> {{$admin->name }}  <b>{{$admin->user_lastname}}</b></span> <br>
-                            <span style="font-size: 12px"> {{$admin->email}} </span>
+                            <span style="font-size: 12px;"> {{$admin->email}} </span>
                             <span class="right"> @if($admin->user_state == 'enabled') <i class="fa fa-circle tooltiped circle" style="color: #4caf50;box-shadow: 2px 1px 6px 4px #00b0ff " data-position="right" data-delay="50" data-tooltip="Activo"></i> @else <i class="fa fa-circle tooltiped" style="color: #424242 " data-position="right" data-delay="50" data-tooltip="Inactivo"></i> @endif</span>
+
+                            @if($admin->group) <br><br> <span class="chip"> {!! $admin->group->group_name !!} </span>
+                            @elseif($admin->TeacherGroups()) <br><br> @foreach($admin->TeacherGroups as $groups) <span class="chip">{!! $groups->group_name !!}</span> @endforeach @endif
+
                         </div>
                         <div class="card-action center">
                             <ul style="padding: 0px 20px">
@@ -31,9 +42,9 @@
                                 </li>
 
                                 <li data-id="{{$admin->id}}" style="display: inline-block; padding-left: 10px">
-                                    <button class="btn-floating waves-circle white tooltiped profile" data-position="bottom" data-delay="50" data-tooltip="Ver Perfil">
+                                    <a href="{{route('user.show', $admin->id)}}" class="btn-floating waves-circle white tooltiped profile" data-position="bottom" data-delay="50" data-tooltip="Ver Perfil">
                                         <i class="fa fa-eye" style="color:grey"></i>
-                                    </button>
+                                    </a>
                                 </li>
 
                                 <li data-id="{{$admin->id}}" style="display: inline-block; padding-left: 10px">

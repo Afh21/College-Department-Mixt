@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::post('/admins/save',             ['uses' => 'DashboardController@saveAdmin','as'  => 'save']);
     Route::get('/extras',                   'DashboardController@extras');
     Route::get('destroy/{id}/user', 'DashboardController@destroy')->name('destroy.user');
+    Route::get('profile/{id}',              ['uses' => 'DashboardController@show'])->name('user.show');
 
     Route::get('/dashboard/periods',    ['uses' => 'DashboardController@getPeriods', 'as'  => 'periods']);
     Route::get('/periods/{id}/destroy', ['uses' => 'PeriodController@destroy','as'  => 'destroyP']);
