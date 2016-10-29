@@ -85,7 +85,7 @@
                         @endif
                         </li>
 
-                        <li style="margin-top: 10px">
+                        <li style="margin-top: 20px">
                         @if($user->is('teacher') && $user->TeacherMaths)
                             <span class="chip">Materias: </span>
                             @foreach($user->TeacherMaths as $math)
@@ -101,16 +101,72 @@
         </div>
 
         <div class="col l7" style="margin-top: 50px">
-            @if($user->id == Auth::user()->id)
+            <table>
+                <thead>
+                <tr>
+                    <th data-field="group"> Grupo</th>
+                    <th data-field="math">  Materias del profesor</th>
+                    <th data-field="period"> Periodos (Habilitados / Deshabilitados) </th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                @foreach($user->TeacherGroups as $gruposProfesor)
+                    @foreach($gruposProfesor->GroupMaths as $materiasGruposProfesor)
+                            @foreach($user->TeacherMaths as $materiasProfesor)
+                                @if($materiasProfesor->id == $materiasGruposProfesor->id)
+
+                                        <tr>
+                                            <td data-group="{!! $gruposProfesor->id !!}">    <span class="chip"> {!! $gruposProfesor->group_name !!} </span>         </td>
+                                            <td data-math="{!! $materiasProfesor->id !!}">    <span class="chip">{!! $materiasProfesor->math_name !!}  </span>        </td>
+                                            <td data-user="{!! $user->id !!}">
+                                                <!-- Si el usuario autenticado es igual al usuario que se ve  RECORDAR CAMBIAR EL != x == -->
+                                                @if($user->id != Auth::user()->id)  <!-- ...... RECORDARSE .... -->
+                                                    @foreach($materiasProfesor->periods as $period)
+                                                        @if($period->period_state == 0)
+                                                            <button class="btn-floating waves-effect waves-circle tooltipped" disabled data-period="{!! $period->id !!}" data-tooltip="Deshabilitado" data-delay="50" data-position="left">{!! $period->period_name !!}</button>
+                                                        @else
+                                                            <button class="btn-floating waves-effect waves-circle tooltipped"  data-period="{!! $period->id !!}" data-tooltip="Habilitado" data-delay="50" data-position="right">{!! $period->period_name !!}</button>
+                                                        @endif
+                                                    @endforeach
+                                                {{-- @else
+                                                    @foreach($materiasProfesor->periods as $period)
+                                                        @if($period->period_state == 0)
+                                                            <button class="btn-floating waves-effect waves-circle tooltipped" disabled data-period="{!! $period->id !!}" data-tooltip="Deshabilitado" data-delay="50" data-position="left">{!! $period->period_name !!}</button>
+                                                        @else
+                                                            <button class="btn-floating waves-effect waves-circle tooltipped"  disabled data-period="{!! $period->id !!}" data-tooltip="Deshabilitado" data-delay="50" data-position="right">{!! $period->period_name !!}</button>
+                                                        @endif
+                                                    @endforeach
+                                                    --}}
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                @endif
+                        @endforeach
+                    @endforeach
+                @endforeach
+
+                </tbody>
+            </table>
+
+            {{-- @if($user->id == Auth::user()->id)
                 <div class="col l12"><a href="{{url('logout')}}" class="btn-floating white"> <i class="fa fa-sign-out" style="color: black"></i> </a></div>
             @else
                 <div class="col l12"><a href="{{route('users')}}" class="btn-floating white"> <i class="fa fa-rotate-left" style="color: black"></i> </a></div>
-            @endif
+            @endif --}}
 
         </div>
     </div>
 
     @include('layouts.links.js')
-
+    @section('js')
+        <script>
+            $(document).ready(function () {
+                $('.tooltipped').tooltip();
+            })
+        </script>
+    @endsection
 </body>
 </html>
