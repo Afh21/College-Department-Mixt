@@ -17,4 +17,8 @@ class Period extends Model
         return $this->belongsToMany('App\Math', 'math_period', 'period_id', 'math_id');
     }
 
+    public function Notes(){
+        return $this->hasMany('App\Note');
+    }
+
 }

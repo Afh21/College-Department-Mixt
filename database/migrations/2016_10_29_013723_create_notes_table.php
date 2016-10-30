@@ -15,17 +15,17 @@ class CreateNotesTable extends Migration
         Schema::create('notes', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('user_id', false, true);
+            $table->integer('user_id', false, true)->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
-            $table->integer('group_id', false, true);
+            $table->integer('group_id', false, true)->nullable();
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
 
-            $table->integer('math_id', false, true);
+            /*$table->integer('math_id', false, true);
             $table->foreign('math_id')->references('id')->on('maths')->onDelete('cascade');
 
             $table->integer('period_id', false, true);
-            $table->foreign('period_id')->references('id')->on('periods')->onDelete('cascade');
+            $table->foreign('period_id')->references('id')->on('periods')->onDelete('cascade');*/
 
             $table->double('note');
 
@@ -33,11 +33,6 @@ class CreateNotesTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::drop('notes');

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Profile </title>
+    <input type="hidden" name="_token" value="{{csrf_token()}}" id="token">
 
     @include('layouts.links.css')
 </head>
@@ -76,7 +77,7 @@
                         @if($user->TeacherGroups->count() > 0)
                             <span class="chip">Grupos: </span>
                             @foreach($user->TeacherGroups as $group)
-                                  <button class="btn-floating waves-effect waves-circle"> {!! $group->group_name !!}</button>
+                                  <button class="btn-floating waves-effect waves-circle" style="margin: 1px 10px"> {!! $group->group_name !!}</button> @if($group->students) {!! $group->students->count() !!} @endif
                             @endforeach
                         @endif
                         @if($user->group)
@@ -117,28 +118,20 @@
                             @foreach($user->TeacherMaths as $materiasProfesor)
                                 @if($materiasProfesor->id == $materiasGruposProfesor->id)
 
-                                        <tr>
-                                            <td data-group="{!! $gruposProfesor->id !!}">    <span class="chip"> {!! $gruposProfesor->group_name !!} </span>         </td>
-                                            <td data-math="{!! $materiasProfesor->id !!}">    <span class="chip">{!! $materiasProfesor->math_name !!}  </span>        </td>
-                                            <td data-user="{!! $user->id !!}">
+                                        <tr data-group="{!! $gruposProfesor->id !!}">
+                                            <td data-group="{!! $gruposProfesor->id !!}" id="GroupId">    <span class="chip"> {!! $gruposProfesor->group_name !!} </span>         </td>
+                                            <td data-math="{!! $materiasProfesor->id !!}" id="MathId">    <span class="chip">{!! $materiasProfesor->math_name !!}  </span>        </td>
+                                            <td data-user="{!! $user->id !!}" id="UserId">
                                                 <!-- Si el usuario autenticado es igual al usuario que se ve  RECORDAR CAMBIAR EL != x == -->
+
                                                 @if($user->id != Auth::user()->id)  <!-- ...... RECORDARSE .... -->
                                                     @foreach($materiasProfesor->periods as $period)
                                                         @if($period->period_state == 0)
                                                             <button class="btn-floating waves-effect waves-circle tooltipped" disabled data-period="{!! $period->id !!}" data-tooltip="Deshabilitado" data-delay="50" data-position="left">{!! $period->period_name !!}</button>
                                                         @else
-                                                            <button class="btn-floating waves-effect waves-circle tooltipped"  data-period="{!! $period->id !!}" data-tooltip="Habilitado" data-delay="50" data-position="right">{!! $period->period_name !!}</button>
+                                                            <button class="btn-floating waves-effect waves-circle tooltipped modal-trigger AskGroup" data-target="modalNote"  data-period="{!! $period->id !!}" data-group="{!! $gruposProfesor->id !!}" data-tooltip="Habilitado" data-delay="50" data-position="right">{!! $period->period_name !!}</button>
                                                         @endif
                                                     @endforeach
-                                                {{-- @else
-                                                    @foreach($materiasProfesor->periods as $period)
-                                                        @if($period->period_state == 0)
-                                                            <button class="btn-floating waves-effect waves-circle tooltipped" disabled data-period="{!! $period->id !!}" data-tooltip="Deshabilitado" data-delay="50" data-position="left">{!! $period->period_name !!}</button>
-                                                        @else
-                                                            <button class="btn-floating waves-effect waves-circle tooltipped"  disabled data-period="{!! $period->id !!}" data-tooltip="Deshabilitado" data-delay="50" data-position="right">{!! $period->period_name !!}</button>
-                                                        @endif
-                                                    @endforeach
-                                                    --}}
                                                 @endif
                                             </td>
                                         </tr>
@@ -160,13 +153,99 @@
         </div>
     </div>
 
+    <div id="note">
+
+    </div>
+
+
     @include('layouts.links.js')
-    @section('js')
+    @yield('js')
         <script>
             $(document).ready(function () {
                 $('.tooltipped').tooltip();
-            })
+                $('.modal-trigger').leanModal({dismissible: false});
+
+                $('.modal-trigger.AskGroup').click(function (){
+
+                    var tr      = $(this).parents('tr');
+                    var Group   = tr.find('td#GroupId').attr('data-group');
+                    var Math    = tr.find('td#MathId').attr('data-math');
+                    var User    = tr.find('td#UserId').attr('data-user');
+                    var Period  = $(this).attr('data-period');
+
+                    var route = 'http://localhost:8000/note/'+Group+'/group/'+Math+'/math/'+Period+'/period';
+
+                    //alert(route);
+
+                    $.get(route, function (){
+                    }).success(function (res){
+
+                        if( !res.error ){
+                            $('div#note').append('<div id="modalNote" class="modal"><div class="modal-content"><h4 class="center">Registrar Notas</h4> <br><br><table id="all"><thead><tr><td>Grupo</td><td>Materia</td><td>Periodo</td><td>Identificacion</td><td>Estudiante</td><td>Nota</td><td>  </td></tr></thead><tbody id="body"></tbody></table></div><div class="modal-footer"> <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat">Salir</a></div></div>');
+                            $('#modalNote').openModal();
+                            $(res.group.students).each(function (key){
+                                $('tbody#body').append('<tr><td data-group='+res.group.id+'>'+res.group.group_name+'</td><td data-math='+res.math.id+'>'+res.math.math_name+'</td><td data-period='+res.period.id+' class="center">'+res.period.period_name+'</td><td data-student='+res.group.students[key].id+' >'+res.group.students[key].user_identity+'</td><td>'+res.group.students[key].name+' '+res.group.students[key].user_lastname+'</td><td><form id="note"><div class="input-field col l3"><input type="text" class="validate" id="valNote"><label for="valNote">Ingrese Nota</label></div></form></td><td><button class="btn-floating unlock waves-effect waves-circle AliBaba" data-id="6i" style="margin-left: 15px"><i class="fa fa-unlock"></i></button><button class="btn-floating lock waves-effect waves-circle tooltipped" style="margin-left: 15px" data-tooltip="Enviar nota" data-delay="50" data-possition="right"><i class="fa fa-plus"></i></button></td></tr>');
+                                $('table#all td ').css({'padding': '0px'});
+                                $('button.lock').hide();
+                            })
+
+                            $('.tooltipped').tooltip();
+
+                            $('button.AliBaba')
+                                    .click(function (){
+
+                                var row     = $(this).parents('tr');
+                                var group   =   row.find('td:nth-child(1)').attr('data-group');
+                                var math    =   row.find('td:nth-child(2)').attr('data-math');
+                                var period  =   row.find('td:nth-child(3)').attr('data-period');
+                                var student =   row.find('td:nth-child(4)').attr('data-student');
+                                var note    =   row.find('td input#valNote').val();
+
+                                if(note != ""){ $(this).hide(); row.find('td button.lock').show(); row.find('td input#valNote').attr('disabled', true); row.find('td input#valNote').css({'border-style-type': 'dotted', 'border-color': 'grey'})}
+                                else {row.find('td input#valNote').css({'border-style-type': 'dotted', 'border-color': 'red'})}
+
+                                })
+
+                            $('button.lock').click(function () {
+                                var row     = $(this).parents('tr');
+                                var group   =   row.find('td:nth-child(1)').attr('data-group');
+                                var math    =   row.find('td:nth-child(2)').attr('data-math');
+                                var period  =   row.find('td:nth-child(3)').attr('data-period');
+                                var student =   row.find('td:nth-child(4)').attr('data-student');
+                                var note    =   row.find('td form input').val();
+                                var token   =   $('#token').val();
+                                //var route   = 'http://localhost:8000/user/'+student+'/group/'+group+'/math/'+math+'/period/'+period+'/save';
+                                var route   = 'http://localhost:8000/user/'+student+'/group/'+group+'/save';
+                                alert(route + " " + note);
+
+                                $.ajax({
+                                    url:        route,
+                                    headers:    {'X-CSRF-TOKEN': token},
+                                    dataType:   'json',
+                                    type:       'POST',
+                                    data:       {'note': note},
+                                    success: function (res){
+                                        Materialize.toast(res.msn, 10000);
+                                    }, fail: function (){
+                                        alert('Fallo el guardado de los datos');
+                                    }
+                                });
+
+
+                            })
+
+                        }else {
+                            alert(res.error);
+                            window.location.href = 'http://localhost:8000/profile/'+User+'';
+                        }
+                    }).fail(function (res){
+                        alert('Falló la consulta');
+                    });
+
+                });
+
+            });
         </script>
-    @endsection
+
 </body>
 </html>

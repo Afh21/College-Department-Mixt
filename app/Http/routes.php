@@ -51,4 +51,8 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/groups/{id}/destroy',  'GroupController@destroy')->name('groups.destroy');
     Route::get('/groups/{id}/find',     'GroupController@find')->name('group.find');
     Route::put('/groups/{id}',          'GroupController@update');
+
+    Route::get('/note/{id}/group/{math}/math/{period}/period', 'NoteController@groups');
+    //Route::post('/user/{user}/group/{group}/math/{math}/period/{period}/save', 'NoteController@saveNote');
+    Route::post('/user/{user}/group/{group}/save', 'NoteController@saveNote');
 });

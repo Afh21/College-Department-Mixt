@@ -45,6 +45,10 @@ class User extends Authenticatable implements HasRoleAndPermissionContract
         return $this->belongsTo('App\Group');
     }
 
+    public function Notes(){
+        return $this->hasMany('App\Note');
+    }
+
 
 
 }

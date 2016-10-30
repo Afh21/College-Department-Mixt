@@ -32,4 +32,8 @@ class Group extends Model
         return $this->hasMany('App\User', 'group_id');
     }
 
+    public function notes(){
+        return $this->hasMany('App\Note');
+    }
+
 }
