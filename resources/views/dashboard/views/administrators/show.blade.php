@@ -121,7 +121,7 @@
                                         <tr data-group="{!! $gruposProfesor->id !!}">
                                             <td data-group="{!! $gruposProfesor->id !!}" id="GroupId">    <span class="chip"> {!! $gruposProfesor->group_name !!} </span>         </td>
                                             <td data-math="{!! $materiasProfesor->id !!}" id="MathId">    <span class="chip">{!! $materiasProfesor->math_name !!}  </span>        </td>
-                                            <td data-user="{!! $user->id !!}" id="UserId">
+                                            <td>
                                                 <!-- Si el usuario autenticado es igual al usuario que se ve  RECORDAR CAMBIAR EL != x == -->
 
                                                 @if($user->id != Auth::user()->id)  <!-- ...... RECORDARSE .... -->
@@ -165,17 +165,16 @@
                 $('.tooltipped').tooltip();
                 $('.modal-trigger').leanModal({dismissible: false});
 
+
                 $('.modal-trigger.AskGroup').click(function (){
 
                     var tr      = $(this).parents('tr');
                     var Group   = tr.find('td#GroupId').attr('data-group');
                     var Math    = tr.find('td#MathId').attr('data-math');
-                    var User    = tr.find('td#UserId').attr('data-user');
                     var Period  = $(this).attr('data-period');
+                    //var Teacher = tr.find('td#UserId').attr('data-user');
 
-                    var route = 'http://localhost:8000/note/'+Group+'/group/'+Math+'/math/'+Period+'/period';
-
-                    //alert(route);
+                    var route = 'http://localhost:8000/group/'+Group+'/math/'+Math+'/period/'+Period+'/find';
 
                     $.get(route, function (){
                     }).success(function (res){
@@ -184,30 +183,61 @@
                             $('div#note').append('<div id="modalNote" class="modal"><div class="modal-content"><h4 class="center">Registrar Notas</h4> <br><br><table id="all"><thead><tr><td>Grupo</td><td>Materia</td><td>Periodo</td><td>Identificacion</td><td>Estudiante</td><td>Nota</td><td>  </td></tr></thead><tbody id="body"></tbody></table></div><div class="modal-footer"> <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat">Salir</a></div></div>');
                             $('#modalNote').openModal();
                             $(res.group.students).each(function (key){
-                                $('tbody#body').append('<tr><td data-group='+res.group.id+'>'+res.group.group_name+'</td><td data-math='+res.math.id+'>'+res.math.math_name+'</td><td data-period='+res.period.id+' class="center">'+res.period.period_name+'</td><td data-student='+res.group.students[key].id+' >'+res.group.students[key].user_identity+'</td><td>'+res.group.students[key].name+' '+res.group.students[key].user_lastname+'</td><td><form id="note"><div class="input-field col l3"><input type="text" class="validate" id="valNote"><label for="valNote">Ingrese Nota</label></div></form></td><td><button class="btn-floating unlock waves-effect waves-circle AliBaba" data-id="6i" style="margin-left: 15px"><i class="fa fa-unlock"></i></button><button class="btn-floating lock waves-effect waves-circle tooltipped" style="margin-left: 15px" data-tooltip="Enviar nota" data-delay="50" data-possition="right"><i class="fa fa-plus"></i></button></td></tr>');
+                                $('tbody#body').append('<tr data-teacher="{!! $user->id !!}"><td data-group='+res.group.id+'>'+res.group.group_name+'</td><td data-math='+res.math.id+'>'+res.math.math_name+'</td><td data-period='+res.period.id+' class="center">'+res.period.period_name+'</td><td data-student='+res.group.students[key].id+' >'+res.group.students[key].user_identity+'</td><td>'+res.group.students[key].name+' '+res.group.students[key].user_lastname+'</td><td><form id="note"><div class="input-field col l3"><input type="text" disabled class="validate" id="valNote" ></div></form></td><td><button class="btn-floating waves-effect waves-circle Begin" style="margin-left: 15px"><i class="fa fa-lock"></i></button><button class="btn-floating waves-effect waves-circle AliBaba" style="margin-left: 15px"><i class="fa fa-unlock"></i></button><button class="btn-floating waves-effect waves-circle tooltipped Finished" style="margin-left: 15px" data-tooltip="Enviar nota" data-delay="50" data-possition="right"><i class="fa fa-plus"></i></button></td></tr>');
                                 $('table#all td ').css({'padding': '0px'});
-                                $('button.lock').hide();
-                            })
+
+                                $('button.Finished').hide();
+                                $('button.AliBaba').hide();
+
+                            });
 
                             $('.tooltipped').tooltip();
 
-                            $('button.AliBaba')
-                                    .click(function (){
 
-                                var row     = $(this).parents('tr');
+                            $('button.Begin').click(function (){
+                                var row     = $(this).parents('tr')
                                 var group   =   row.find('td:nth-child(1)').attr('data-group');
                                 var math    =   row.find('td:nth-child(2)').attr('data-math');
-                                var period  =   row.find('td:nth-child(3)').attr('data-period');
-                                var student =   row.find('td:nth-child(4)').attr('data-student');
-                                var note    =   row.find('td input#valNote').val();
+                                var period  =   row.find('td:nth-child(3)').attr('data-period')
+                                var student = row.find('td:nth-child(4)').attr('data-student');
 
-                                if(note != ""){ $(this).hide(); row.find('td button.lock').show(); row.find('td input#valNote').attr('disabled', true); row.find('td input#valNote').css({'border-style-type': 'dotted', 'border-color': 'grey'})}
-                                else {row.find('td input#valNote').css({'border-style-type': 'dotted', 'border-color': 'red'})}
+                                var route = 'http://localhost:8000/user/'+student+'/group/'+group+'/math/'+math+'/period/'+period+'/find';
 
-                                })
+                                $.get(route, function (){
+                                }).success(function (res){
+                                    if(res.note == null ){
+                                        row.find('td input#valNote').append('<label for="valNote">Ingrese Nota</label>');
+                                        row.find('td input#valNote').attr('disabled', false).focus();
+                                        $('button.Begin').hide();
+                                        $('button.AliBaba').show();
+                                    }else{
+                                        row.find('td input#valNote').focus().val(res.note.note).css({'text-align': 'center'});
+                                    }
+                                }).fail(function (){
+                                   alert('Fallo la consulta');
+                                });
 
-                            $('button.lock').click(function () {
+                            });
+
+                            //Valida que el input tenga algun valor
+                            $('button.AliBaba').click(function (){
                                 var row     = $(this).parents('tr');
+                                var note    =   row.find('td input#valNote').val();
+                                if(note != ""){
+                                    $(this).hide();
+                                    row.find('td button.Finished').show();
+                                    row.find('td input#valNote').attr('disabled', true);
+                                    row.find('td input#valNote').css({'border-style-type': 'dotted', 'border-color': 'grey'})
+                                }
+                                else {
+                                    row.find('td input#valNote').css({'border-style-type': 'dotted', 'border-color': 'red'})
+                                }
+                            });
+
+                            // Almacena la nota
+                            $('button.Finished').click(function () {
+                                var row     = $(this).parents('tr');
+                                var teacher = $(this).parents('tr').attr('data-teacher');
                                 var group   =   row.find('td:nth-child(1)').attr('data-group');
                                 var math    =   row.find('td:nth-child(2)').attr('data-math');
                                 var period  =   row.find('td:nth-child(3)').attr('data-period');
@@ -215,7 +245,7 @@
                                 var note    =   row.find('td form input').val();
                                 var token   =   $('#token').val();
                                 //var route   = 'http://localhost:8000/user/'+student+'/group/'+group+'/math/'+math+'/period/'+period+'/save';
-                                var route   = 'http://localhost:8000/user/'+student+'/group/'+group+'/save';
+                                var route   = 'http://localhost:8000/teacher/'+teacher+'/user/'+student+'/group/'+group+'/math/'+math+'/period/'+period+'/save';
                                 alert(route + " " + note);
 
                                 $.ajax({
@@ -226,6 +256,7 @@
                                     data:       {'note': note},
                                     success: function (res){
                                         Materialize.toast(res.msn, 10000);
+                                        window.location.href = 'http://localhost:8000/profile/'+teacher+'';
                                     }, fail: function (){
                                         alert('Fallo el guardado de los datos');
                                     }

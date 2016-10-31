@@ -45,8 +45,14 @@ class User extends Authenticatable implements HasRoleAndPermissionContract
         return $this->belongsTo('App\Group');
     }
 
+    // Este es para guardar la nota del estudiante
     public function Notes(){
         return $this->hasMany('App\Note');
+    }
+
+    // Este para guardar el profesor q registra la nota
+    public function teacherNote(){
+        return $this->hasMany('App\Note', 'teacher_id');
     }
 
 

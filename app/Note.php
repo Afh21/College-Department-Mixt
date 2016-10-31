@@ -8,7 +8,7 @@ class Note extends Model
 {
     protected $table = 'notes';
 
-    protected $fillable = ['user_id', 'group_id', 'note'];  //,  'math_id', 'period_id', 'note'];
+    protected $fillable = ['user_id', 'group_id', 'math_id', 'period_id', 'teacher_id', 'note'];
 
     // Relaciones
     public function user(){
@@ -25,5 +25,9 @@ class Note extends Model
 
     public function period(){
         return $this->belongsTo('App\Period');
+    }
+
+    public function teacher(){
+        return $this->belongsTo('App\User');
     }
 }

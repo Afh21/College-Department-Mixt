@@ -14,9 +14,11 @@ class NoteController extends Controller
 {
     public function groups($group, $math, $period){
 
+
         $group  = Group::where('id', $group)->select(['id','group_name'])->first();
         $math   = Math::where('id', $math)->select(['id','math_name'])->first();
         $period = Period::where('id', $period)->select(['id', 'period_name'])->first();
+
 
         if($group->students->count() > 0){
             return response()->json([
@@ -31,28 +33,33 @@ class NoteController extends Controller
         }
     }
 
-    public function saveNote(Request $request, $user, $group){ //, $math, $period){
+
+
+    public function findNote($user, $group, $math, $period){
+        $note = User::find($user)->notes()->select('note')->where('group_id', $group)->where('math_id', $math)->where('period_id', $period)->first();
+
+        return response()->json([
+            'note' => $note
+        ]);
+    }
+
+    public function saveNote(Request $request, $teacher,  $user, $group, $math, $period){
+
         if($request->ajax()){
-            $note = new Note($request->all());
+
+            $teacher = User::find($teacher);
             $user   = User::find($user);
             $group  = Group::find($group);
-
-            //dd($user, $group);
-            /*$math   = Math::find($math);
+            $math   = Math::find($math);
             $period = Period::find($period);
 
-            dd($user, $group, $math, $period, $request->note); */
-            //dd($user, $group);
-
-            $group->notes()->save($note);
-            $user->Notes()->save($note);
-
-
-            $note->save();
-
-                /*$math->notes()->save($note);
-                $period->notes()->save($note);*/
-
+            $note = new Note($request->all());
+                $teacher->teacherNote()->save($note);
+                $user->Notes()->save($note);
+                $group->notes()->save($note);
+                $math->notes()->save($note);
+                $period->notes()->save($note);
+                $note->save();
 
             return response()->json([
                 'msn' => 'Nota guardada correctamente'
