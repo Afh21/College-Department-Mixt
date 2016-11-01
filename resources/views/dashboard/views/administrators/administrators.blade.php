@@ -42,9 +42,15 @@
                                 </li>
 
                                 <li data-id="{{$admin->id}}" style="display: inline-block; padding-left: 10px">
-                                    <a href="{{route('user.show', $admin->id)}}" class="btn-floating waves-circle white tooltiped profile" data-position="bottom" data-delay="50" data-tooltip="Ver Perfil">
-                                        <i class="fa fa-eye" style="color:grey"></i>
-                                    </a>
+                                    @if($admin->is('teacher') || $admin->is('administrator') )
+                                        <a href="{{route('user.show', $admin->id)}}" class="btn-floating waves-circle white tooltiped profile" data-position="bottom" data-delay="50" data-tooltip="Ver Perfil">
+                                            <i class="fa fa-eye" style="color:grey"></i>
+                                        </a>
+                                    @else
+                                        <a href="{{route('student.show', $admin->id)}}" class="btn-floating waves-circle white tooltiped profile" data-position="bottom" data-delay="50" data-tooltip="Ver Perfil">
+                                            <i class="fa fa-eye" style="color:grey"></i>
+                                        </a>
+                                    @endif
                                 </li>
 
                                 <li data-id="{{$admin->id}}" style="display: inline-block; padding-left: 10px">

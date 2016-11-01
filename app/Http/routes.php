@@ -28,8 +28,9 @@ Route::group(['middleware' => 'auth'], function (){
     Route::put('/admins/find/{id}/update',  ['uses' => 'DashboardController@updateAdmin','as'  => 'update']);
     Route::post('/admins/save',             ['uses' => 'DashboardController@saveAdmin','as'  => 'save']);
     Route::get('/extras',                   'DashboardController@extras');
-    Route::get('destroy/{id}/user', 'DashboardController@destroy')->name('destroy.user');
+    Route::get('destroy/{id}/user',         'DashboardController@destroy')->name('destroy.user');
     Route::get('profile/{id}',              ['uses' => 'DashboardController@show'])->name('user.show');
+    Route::get('student/{id}',              'StudentController@profile')->name('student.show');
 
     Route::get('/dashboard/periods',    ['uses' => 'DashboardController@getPeriods', 'as'  => 'periods']);
     Route::get('/periods/{id}/destroy', ['uses' => 'PeriodController@destroy','as'  => 'destroyP']);
@@ -55,4 +56,8 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/group/{group}/math/{math}/period/{period}/find',               'NoteController@groups');
     Route::get('/user/{user}/group/{group}/math/{math}/period/{period}/find',   'NoteController@findNote');
     Route::post('/teacher/{teacher}/user/{user}/group/{group}/math/{math}/period/{period}/save', 'NoteController@saveNote');
+    Route::put('/teacher/{teacher}/user/{user}/group/{group}/math/{math}/period/{period}/update',  'NoteController@updateNote');
+
+    Route::get('/group/{group}/period/{period}/student/{student}', 'StudentController@studentNotes');
+    Route::get('/student/{student}/group/{group}/period/{period}/notes', 'StudentController@studentNotes');
 });

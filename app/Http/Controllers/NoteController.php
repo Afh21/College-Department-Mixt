@@ -68,6 +68,14 @@ class NoteController extends Controller
     }
 
 
+    public function updateNote(Request $request, $teacher,  $user, $group, $math, $period){
+        if($request->ajax()){
+            $student = User::find($user)->Notes()->select('note')->where('teacher_id', $teacher)->where('group_id', $group)->where('math_id', $math)->where('period_id', $period)->update(['note' => $request->note]);
 
+            return response()->json([
+                'msn' => 'Nota actualizada exitosamente'
+            ]);
+        }
+    }
 
 }

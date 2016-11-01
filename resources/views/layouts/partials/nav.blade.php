@@ -43,7 +43,7 @@
                 <i class="fa fa-graduation"></i> &nbsp; Perfil Profesor
             </a>
         @else
-            <a href="">
+            <a href="{{route('student.show', Auth::user()->id)}}">
                 <i class="fa fa-child"></i> &nbsp; Perfil Estudiante
             </a>
         @endif

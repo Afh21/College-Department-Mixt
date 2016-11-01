@@ -37,7 +37,7 @@
                             <span class="chip"> <i class="fa fa-envelope-o"></i> </span> <span class="chip"> {!! $user->email !!} </span>
                         </li>
                         <li>
-                            @if($user->genre == 'F') <span class="chip">  <i class="fa fa-venus"></i></span> <span class="chip"> Femenino </span> @else <span class="chip"> <i class="fa fa-mars"></i> </span> <span class="chip"> Masculino </span> @endif
+                            @if($user->user_genre == 'F') <span class="chip">  <i class="fa fa-venus"></i></span> <span class="chip"> Femenino </span> @else <span class="chip"> <i class="fa fa-mars"></i> </span> <span class="chip"> Masculino </span> @endif
                         </li>
                         <li>
                             <span class="chip"> <i class="fa fa-map-marker"></i> </span> <span class="chip"> {!! $user->user_department !!}, {!! $user->user_town !!}</span>
@@ -107,7 +107,9 @@
                 <tr>
                     <th data-field="group"> Grupo</th>
                     <th data-field="math">  Materias del profesor</th>
-                    <th data-field="period"> Periodos (Habilitados / Deshabilitados) </th>
+                    @if($user->id == Auth::user()->id)
+                        <th data-field="period"> Periodos (Habilitados / Deshabilitados) </th>
+                    @endif
                 </tr>
                 </thead>
 
@@ -132,6 +134,9 @@
                                                             <button class="btn-floating waves-effect waves-circle tooltipped modal-trigger AskGroup" data-target="modalNote"  data-period="{!! $period->id !!}" data-group="{!! $gruposProfesor->id !!}" data-tooltip="Habilitado" data-delay="50" data-position="right">{!! $period->period_name !!}</button>
                                                         @endif
                                                     @endforeach
+                                                @else
+                                                    <a href="{{route('users')}}" class="btn btn-large waves-effect">
+                                                        <i class="fa fa-rotate-left left" style="color: black"></i>  Ir a Usuarios</a>
                                                 @endif
                                             </td>
                                         </tr>
@@ -143,12 +148,6 @@
 
                 </tbody>
             </table>
-
-            {{-- @if($user->id == Auth::user()->id)
-                <div class="col l12"><a href="{{url('logout')}}" class="btn-floating white"> <i class="fa fa-sign-out" style="color: black"></i> </a></div>
-            @else
-                <div class="col l12"><a href="{{route('users')}}" class="btn-floating white"> <i class="fa fa-rotate-left" style="color: black"></i> </a></div>
-            @endif --}}
 
         </div>
     </div>
@@ -183,23 +182,25 @@
                             $('div#note').append('<div id="modalNote" class="modal"><div class="modal-content"><h4 class="center">Registrar Notas</h4> <br><br><table id="all"><thead><tr><td>Grupo</td><td>Materia</td><td>Periodo</td><td>Identificacion</td><td>Estudiante</td><td>Nota</td><td>  </td></tr></thead><tbody id="body"></tbody></table></div><div class="modal-footer"> <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat">Salir</a></div></div>');
                             $('#modalNote').openModal();
                             $(res.group.students).each(function (key){
-                                $('tbody#body').append('<tr data-teacher="{!! $user->id !!}"><td data-group='+res.group.id+'>'+res.group.group_name+'</td><td data-math='+res.math.id+'>'+res.math.math_name+'</td><td data-period='+res.period.id+' class="center">'+res.period.period_name+'</td><td data-student='+res.group.students[key].id+' >'+res.group.students[key].user_identity+'</td><td>'+res.group.students[key].name+' '+res.group.students[key].user_lastname+'</td><td><form id="note"><div class="input-field col l3"><input type="text" disabled class="validate" id="valNote" ></div></form></td><td><button class="btn-floating waves-effect waves-circle Begin" style="margin-left: 15px"><i class="fa fa-lock"></i></button><button class="btn-floating waves-effect waves-circle AliBaba" style="margin-left: 15px"><i class="fa fa-unlock"></i></button><button class="btn-floating waves-effect waves-circle tooltipped Finished" style="margin-left: 15px" data-tooltip="Enviar nota" data-delay="50" data-possition="right"><i class="fa fa-plus"></i></button></td></tr>');
+                                $('tbody#body').append('<tr data-teacher="{!! $user->id !!}"><td data-group='+res.group.id+'>'+res.group.group_name+'</td><td data-math='+res.math.id+'>'+res.math.math_name+'</td><td data-period='+res.period.id+' class="center">'+res.period.period_name+'</td><td data-student='+res.group.students[key].id+' >'+res.group.students[key].user_identity+'</td><td>'+res.group.students[key].name+' '+res.group.students[key].user_lastname+'</td><td><form id="note"><div class="input-field col l3"><input type="text" disabled class="validate" id="valNote" ></div></form></td><td><button class="btn-floating waves-effect waves-circle Begin tooltipped" style="margin-left: 15px " data-tooltip="Click aqui" data-possition="right" data-delay="50"><i class="fa fa-lock"></i></button><button class="btn-floating waves-effect waves-circle AliBaba" style="margin-left: 15px"><i class="fa fa-unlock"></i></button><button class="btn-floating waves-effect waves-circle tooltipped Finished" style="margin-left: 15px" data-tooltip="Enviar nota" data-delay="50" data-possition="right"><i class="fa fa-plus"></i></button> <button class="btn-floating waves-effect waves-effect waves-circle Update tooltipped" style="margin-left: 15px" data-tooltip="Actualizar nota" data-possition="right" data-delay="50" ><i class="fa fa-refresh"></i></button>  </td></tr>');
                                 $('table#all td ').css({'padding': '0px'});
 
                                 $('button.Finished').hide();
                                 $('button.AliBaba').hide();
+                                $('button.Update').hide();
 
                             });
 
                             $('.tooltipped').tooltip();
 
 
+                            // Pregunta si el estudiante tiene nota
                             $('button.Begin').click(function (){
                                 var row     = $(this).parents('tr')
                                 var group   =   row.find('td:nth-child(1)').attr('data-group');
                                 var math    =   row.find('td:nth-child(2)').attr('data-math');
                                 var period  =   row.find('td:nth-child(3)').attr('data-period')
-                                var student = row.find('td:nth-child(4)').attr('data-student');
+                                var student =   row.find('td:nth-child(4)').attr('data-student');
 
                                 var route = 'http://localhost:8000/user/'+student+'/group/'+group+'/math/'+math+'/period/'+period+'/find';
 
@@ -208,11 +209,51 @@
                                     if(res.note == null ){
                                         row.find('td input#valNote').append('<label for="valNote">Ingrese Nota</label>');
                                         row.find('td input#valNote').attr('disabled', false).focus();
-                                        $('button.Begin').hide();
-                                        $('button.AliBaba').show();
+                                        row.find('td button.Begin').hide();
+                                        row.find('td button.AliBaba').show();
                                     }else{
+                                        row.find('td button.Begin').hide();
+                                        row.find('td button.Update').show();
                                         row.find('td input#valNote').focus().val(res.note.note).css({'text-align': 'center'});
+
+                                        row.find('td button.Update').click(function (){
+                                            row.find('td input#valNote').focus().attr('disabled', false);
+                                        });
+
+                                        row.find('td button.Update').dblclick(function (){
+                                            var input = row.find('td input#valNote');
+                                            if(input.val() == ""){
+                                                alert('Este campo no debe estar vacío');
+                                            }
+                                            else {
+                                                //Actualiza la nota
+                                                var teacher = $(this).parents('tr').attr('data-teacher');
+                                                var route = 'http://localhost:8000/teacher/'+teacher+'/user/'+student+'/group/'+group+'/math/'+math+'/period/'+period+'/update';
+                                                var note    =   row.find('td form input').val();
+                                                var token   =   $('#token').val();
+                                                //alert(route);
+
+                                                $.ajax({
+                                                    url:        route,
+                                                    headers:    {'X-CSRF-TOKEN': token},
+                                                    dataType:   'json',
+                                                    data:       {'note': note},
+                                                    type:       'PUT',
+                                                    success: function (res){
+                                                        Materialize.toast(res.msn, 10000);
+                                                        row.find('td form input').attr('disabled', true);
+                                                        row.find('td button.Update').hide();
+                                                        row.find('td button.Begin').show();
+
+                                                        //window.location.href = 'http://localhost:8000/profile/'+teacher+'';
+                                                    }
+                                                })
+                                            }
+                                        });
                                     }
+
+
+
                                 }).fail(function (){
                                    alert('Fallo la consulta');
                                 });
@@ -246,7 +287,7 @@
                                 var token   =   $('#token').val();
                                 //var route   = 'http://localhost:8000/user/'+student+'/group/'+group+'/math/'+math+'/period/'+period+'/save';
                                 var route   = 'http://localhost:8000/teacher/'+teacher+'/user/'+student+'/group/'+group+'/math/'+math+'/period/'+period+'/save';
-                                alert(route + " " + note);
+                                //alert(route + " " + note);
 
                                 $.ajax({
                                     url:        route,
@@ -256,15 +297,12 @@
                                     data:       {'note': note},
                                     success: function (res){
                                         Materialize.toast(res.msn, 10000);
-                                        window.location.href = 'http://localhost:8000/profile/'+teacher+'';
+                                        ///window.location.href = 'http://localhost:8000/profile/'+teacher+'';
                                     }, fail: function (){
                                         alert('Fallo el guardado de los datos');
                                     }
                                 });
-
-
                             })
-
                         }else {
                             alert(res.error);
                             window.location.href = 'http://localhost:8000/profile/'+User+'';
