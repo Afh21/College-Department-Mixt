@@ -68,11 +68,15 @@ div#text p span {
 div#text {
     text-align: center;
     margin-top: 50px;
+    line-height: 26px;
 }
 
 div#contamos{
+    margin-top: 10em ;
+    margin-bottom: 10em ;
     background-color: #96daea;
 }
+
 div#contamos p {
     text-align: center;
     font-family: 'Raleway', sans-serif;
@@ -87,8 +91,13 @@ div#contamos p span{
     font-weight: bold;
     font-family: 'Lobster', cursive;
     letter-spacing: 4px;
+    line-height: 20px;
 }
 
+div#ubicacion{
+    margin-top: 10em ;
+    margin-bottom: 10em ;
+}
 /*
 
 font-family: 'Pacifico', cursive;
