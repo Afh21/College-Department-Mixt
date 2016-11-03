@@ -32,6 +32,10 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('profile/{id}',              ['uses' => 'DashboardController@show'])->name('user.show');
     Route::get('student/{id}',              'StudentController@profile')->name('student.show');
 
+    Route::get('/groups/available',         'DashboardController@GroupsAvailable');
+    Route::post('/teacher/{id}/assign',     ['uses' => 'DashboardController@AsignGroup', 'as' => 'assignGroup']);
+    Route::get('/teacher/{id}/unassign',    ['uses' => 'DashboardController@UnassignGroup', 'as' => 'UnassignGroup']);
+
     Route::get('/dashboard/periods',    ['uses' => 'DashboardController@getPeriods', 'as'  => 'periods']);
     Route::get('/periods/{id}/destroy', ['uses' => 'PeriodController@destroy','as'  => 'destroyP']);
     Route::get('/periods/{id}/find',    ['uses'  => 'PeriodController@find', 'as' => 'find']);

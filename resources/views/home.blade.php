@@ -2,6 +2,6 @@
 
 @section('content')
 
-    Yo soy el home
+   Aqui va el cuerpo 
 
 @endsection

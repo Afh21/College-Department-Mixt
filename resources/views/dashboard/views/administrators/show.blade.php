@@ -126,7 +126,7 @@
                                             <td>
                                                 <!-- Si el usuario autenticado es igual al usuario que se ve  RECORDAR CAMBIAR EL != x == -->
 
-                                                @if($user->id != Auth::user()->id)  <!-- ...... RECORDARSE .... -->
+                                                @if($user->id == Auth::user()->id)  <!-- ...... RECORDARSE .... -->
                                                     @foreach($materiasProfesor->periods as $period)
                                                         @if($period->period_state == 0)
                                                             <button class="btn-floating waves-effect waves-circle tooltipped" disabled data-period="{!! $period->id !!}" data-tooltip="Deshabilitado" data-delay="50" data-position="left">{!! $period->period_name !!}</button>

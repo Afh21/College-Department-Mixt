@@ -45,27 +45,36 @@
                                 @if($group->group_assigned == 0)
                                     <button class="btn-floating white">
                                         <i class="fa fa-thumbs-o-down" style="color:grey"></i></button>
+                                @else
+                                    <button class="btn-floating white">
+                                        <i class="fa fa-thumbs-up" style="color:grey"></i></button>
                                 @endif
                             </td>
 
-                            @if($group->user_teacher_director == NULL)
+
                                 <td class="center">
-                                    <button class="btn-floating white tooltiped" data-tooltip="Disponible para asignacion" data-delay="50" data-possiton="buttom">
-                                        <i class="fa fa-info" style="color:black"></i> </button>
+                                    @if($group->user_teacher_director == null)
+                                        <button class="btn-floating white tooltiped" data-tooltip="Disponible para asignacion" data-delay="50" data-possiton="buttom">
+                                            <i class="fa fa-info" style="color:black"></i> </button>
+                                    @else
+                                        <span class="chip">{!! $group->director->name !!} {!! $group->director->user_lastname !!}</span>
+                                    @endif
                                 </td>
-                            @endif
+
 
                             <style>.chip.math{padding: 0px 6px;}</style>
 
-                            @if($group->GroupMaths()->count() > 0 )
+
 
                                 <td class="center">
-                                     @foreach($group->GroupMaths as $maths)
-                                       <span class="chip math"> {!! $maths->math_code !!} - {!! $maths->math_name !!} </span>
-                                    @endforeach
+                                    @if($group->GroupMaths()->count() > 0 )
+                                         @foreach($group->GroupMaths as $maths)
+                                           <span class="chip math"> {!! $maths->math_code !!} - {!! $maths->math_name !!} </span>
+                                         @endforeach
+                                    @endif
                                 </td>
 
-                            @endif
+
                             <td>
                                 <ul>
                                     <li style="display: inline-flex;" data-id="{{$group->id}}">

@@ -125,7 +125,7 @@
                         $('#modalNote').openModal();
                         $('span#p').append(period);
                         $(res.msn).each(function (key){
-                            $('table tbody').append('<tr data-student=""><td>'+res.msn[key].math_name+'</td><td>'+res.msn[key].period_name+'</td><td>'+res.msn[key].note+'</td></tr>');
+                            $('table tbody').append('<tr id="id" data-student='+res.msn[key].id+'><td>'+res.msn[key].math_name+'</td><td>'+res.msn[key].period_name+'</td><td>'+res.msn[key].note+'</td></tr>');
                         });
                     }).fail(function (){
 
@@ -133,7 +133,8 @@
                 });
 
                 $('.modal-close').click(function () {
-                    //window.location.href = 'http://localhost:8000/student/'++';
+                    var student = $('tr#id').attr('data-student');
+                    window.location.href = 'http://localhost:8000/student/'+student+'';
                 })
             })
         </script>

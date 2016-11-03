@@ -2,6 +2,6 @@
 
 @section('content')
 
-    Yo soy el welcome
+    aqui va el cuerpo
 
 @endsection

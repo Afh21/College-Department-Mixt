@@ -8,7 +8,7 @@ class Group extends Model
 {
     protected $table = 'groups';
 
-    protected $guarded = ['group_assigned'];
+    protected $guarded = ['group_assigned', 'user_teacher_director'];
 
     //Relaciones
 
@@ -24,7 +24,7 @@ class Group extends Model
 
     // Uno a muchos (Director de Grupo)
     public function director(){
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User','user_teacher_director');
     }
 
     // Se activa para agregar estudiantes al Grupo

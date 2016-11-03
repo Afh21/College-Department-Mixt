@@ -15,6 +15,14 @@
 
     <header>
         @include('layouts.partials.nav')
+
+            <div class="col l6 center" style="margin-top: 3em">
+                <img src="/images/school.png" alt="">
+            </div>
+            <div class="col l6 center">
+                <h5>Colegio Departamental Mixto - Pto Salgar</h5>
+            </div>
+
     </header>
 
     <div class="container">

@@ -1,0 +1,18 @@
+header{
+    height: 800px;
+    background-color: #90e0f9;
+}
+
+nav {
+    background-color: #90e0f9;
+    box-shadow: none;
+}
+
+nav div ul li a{
+    color: black;
+    font-weight: 800;
+}
+
+nav div ul li a:hover {
+    background-color: #90e0f9;
+}

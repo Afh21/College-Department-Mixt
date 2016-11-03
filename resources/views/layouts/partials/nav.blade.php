@@ -1,11 +1,11 @@
 <nav>
     <div class="nav-wrapper">
-        <a href="#!" class="brand-logo">Logo</a>
+        <a href="/" class="brand-logo" style="margin: 0.3em 0.3em"> <img src="images/logo.png" alt=""></a>
 
         <ul class="right hide-on-med-and-down">
             @if (Auth::guest())
                 <li>
-                    <a href="{{ url('/login') }}">Ingresar</a>
+                    <a href="{{ url('/login') }}"><span class="chip">Ingresar</span></a>
                 </li>
             @else
                 <li>

@@ -28,7 +28,7 @@ class StudentController extends Controller
                             ->where('notes.user_id', '=', $student)
                             ->where('notes.period_id', '=', $period)
                             ->where('notes.group_id', '=', $group)
-                            ->select('maths.math_name', 'periods.period_name', 'notes.note')
+                            ->select('maths.math_name', 'periods.period_name', 'notes.note', 'users.id')
                             ->get();
 
         return response()->json([

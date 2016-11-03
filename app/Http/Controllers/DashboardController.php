@@ -10,6 +10,7 @@ use App\Period;
 use App\Math;
 use App\Group;
 use DB;
+use Symfony\Component\Routing\Matcher\RedirectableUrlMatcher;
 
 class DashboardController extends Controller
 {
@@ -23,20 +24,9 @@ class DashboardController extends Controller
     }
 
     public function getUsers(){
-
-        $user = User::all();
-        $admin = $user->each(function ($query){
-            $query->roles()->each(function ($order) { $order->orderBy('level', 'ASC');  });
-
-            if($query->TeacherDirector){ $query->TeacherDirector; }
-            if($query->TeacherGroups && $query->TeacherMaths){ $query->TeacherGroups; $query->TeacherMaths; }
-            if($query->group){$query->group;}
-
-        });
-
+        $admin = User::all();
         return view('dashboard.views.administrators.administrators')->with('admin', $admin);
     }
-
 
     public function getPeriods(){
         $periods = Period::orderBy('period_name', 'ASC')->get();
@@ -65,7 +55,35 @@ class DashboardController extends Controller
     }
 
 
+    public function AsignGroup(Request $request, $id){
+        if($request->ajax()){
+            $user = User::find($id);
+            if($user->TeacherDirector ){
+                $group = Group::find($request->AsignarGrupoDirector);//->update(['group_assigned' => 1, 'user_teacher_director' => $user->id]);
+                $user->TeacherDirector()->save($group);
+                $group->where('user_teacher_director', $user->id)->update(['group_assigned' => 1]);
+            }
 
+            return response()->json(['msn' => 'Grupo guardado exitosamente']);
+        }
+
+    }
+
+    public function UnassignGroup($id){
+        $user = User::find($id);
+        if($user->TeacherDirector()){
+            $user->TeacherDirector()->where('user_teacher_director', $user->id)->update(['group_assigned' =>  0, 'user_teacher_director' => null ]);
+        }
+
+        return redirect()->back();
+    }
+
+    public function GroupsAvailable(){
+        $group = Group::where('group_assigned', 0)->where('user_teacher_director', null)->get();
+        return response()->json([
+            'groups' => $group
+        ]);
+    }
 
     public function find($id)
     {
@@ -259,6 +277,9 @@ class DashboardController extends Controller
     public function destroy($id){
         $user = User::find($id);
             if($user->group()){ $user->group()->dissociate(); }
+            if($user->TeacherDirector()){Group::where('user_teacher_director', $user->id)->update(['user_teacher_director'=>null, 'group_assigned' => 0]);}
+
+
         $user->delete();
 
         if($user->roles())        { $user->roles()->detach();        }
