@@ -46,8 +46,47 @@ hr {
     border-top-color: #00b0ff;
 }
 
+span.res{
+    font-size: 12px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
+}
+
+h4 {
+    font-family: 'Lobster', cursive;
+}
+div#text p{
+    font-family: 'Raleway', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+div#text p span {
+    background-color: black;
+}
+
 div#text {
     text-align: center;
+    margin-top: 50px;
+}
+
+div#contamos{
+    background-color: #96daea;
+}
+div#contamos p {
+    text-align: center;
+    font-family: 'Raleway', sans-serif;
+    margin-top: 5em;
+    font-size: 17px;
+    font-weight: 400;
+    padding: 100px 55px;
+}
+
+div#contamos p span{
+    font-size: 2em;
+    font-weight: bold;
+    font-family: 'Lobster', cursive;
+    letter-spacing: 4px;
 }
 
 /*
