@@ -94,10 +94,39 @@ div#contamos p span{
     line-height: 20px;
 }
 
+div#contamos p span.chip{
+    font-size: 15px;
+    letter-spacing: 0px;
+    padding-top: 5px;
+    font-family: 'Raleway', sans-serif;
+}
+
 div#ubicacion{
     margin-top: 10em ;
     margin-bottom: 10em ;
 }
+
+div#footer{
+    margin-top: 10em;
+    height: 250px;
+    background-color: #f5f5f5  ;
+}
+
+div#copy{
+    font-family: 'Raleway', sans-serif;
+    font-size: 15px;
+}
+div#footer ul {
+    padding-top: 10px;
+}
+
+div#footer ul li {
+    margin: 10px 8px;
+}
+
+
+
+
 /*
 
 font-family: 'Pacifico', cursive;

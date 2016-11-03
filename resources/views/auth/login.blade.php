@@ -1,66 +1,66 @@
-@extends('layouts.app')
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login </title>
+    @include('layouts.links.css')
 
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
-                        {{ csrf_field() }}
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+</head>
+<body>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
+    <div class="container">
+        <div class="row">
 
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
+            <div class="center" style="margin-bottom: 80px">
+                <img src="images/sesion.png" alt="Inicio de Sesion">
+                <h5 style="font-family: 'Lobster', cursive; font-size: 50px">Inicio de Sesión</h5>
+            </div>
+
+                <form method="POST" action="{{ url('/login') }}">
+                    {{ csrf_field() }}
+
+                    <div class=" {{ $errors->has('email') ? ' has-error' : '' }}">
+
+                        <div class="col l6 input-field">
+                            <input id="email" type="email" class="validate" name="email" value="{{ old('email') }}">
+                            <label for="email" class="">Correo electrónico</label>
                         </div>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
+                        @if ($errors->has('email'))
+                            <span class=""> <strong>{{ $errors->first('email') }}</strong> </span>
+                        @endif
+                    </div>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password">
+                    <div class=" {{ $errors->has('password') ? ' has-error' : '' }}">
 
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
+                        <div class="col l6 input-field">
+                            <input id="password" type="password" class="validate" name="password">
+                            <label for="password" >Contraseña</label>
                         </div>
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember"> Remember Me
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+                        @if ($errors->has('password'))
+                            <span class=""> <b>{{ $errors->first('password') }}</b> </span>
+                        @endif
+                    </div>
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-sign-in"></i> Login
-                                </button>
+                    <div class="col l12 center">
+                        <button type="submit" class="btn btn-float "> <i class="fa fa-btn fa-sign-in"></i> Ingresar </button>
+                        {{-- <a class="btn btn-float" href="{{ url('/password/reset') }}">Forgot Your Password?</a> --}}
+                    </div>
+                </form>
 
-                                <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
             </div>
         </div>
     </div>
-</div>
-@endsection
+
+
+    @include('layouts.links.js')
+
+</body>
+</html>
+
+

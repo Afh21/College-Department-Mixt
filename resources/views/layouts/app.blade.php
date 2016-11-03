@@ -8,8 +8,11 @@
 
     <title>Colegio Departamental Mixto</title>
 
-
     @include('layouts.links.css')
+    <link rel="stylesheet" href="{{asset('css/home.css')}}">
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa:300,400,700|Lobster|Lobster+Two:400,700|Pacifico|Raleway:300,400,600,700,800|Scope+One" rel="stylesheet">
+
+
 
 </head>
 <body>
@@ -86,7 +89,15 @@
                         <p >
                             <span>Además </span> contamos con una excelente planta académica, con la que nos sentimos
                             honrados de tener, ya que con su experiencia en la docencia, hacen de las clases diarias
-                            un mundo lleno de conocimiento para nuestros niños y jovenes.
+                            un mundo lleno de conocimiento para nuestros niños y jovenes. <br><br> Los <b>Grupos</b>
+                            disponibles son ...
+                            <span class="chip">1A</span> <span class="chip">1B</span> <span class="chip">1C</span>
+                            <span class="chip">2A</span> <span class="chip">2B</span> <span class="chip">2C</span>
+                            <span class="chip">3A</span> <span class="chip">3B</span>
+                            <span class="chip">4A</span> <span class="chip">4B</span> <span class="chip">4C</span>
+                            <span class="chip">5A</span> <span class="chip">5B</span> <span class="chip">5C</span>
+                            <span class="chip">6-1</span> <span class="chip">6-2</span> <span class="chip">6-3</span>
+                            etc..
                         </p>
                     </div>
                     <div class="col l6 right">
@@ -97,20 +108,51 @@
         </div>
 
     <div class="container">
-
         <div id="ubicacion">
-            <h4 class="center">Ubicanos..</h4>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d3598.7082584053187!2d-74.65493068320242!3d5.465251842557875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e6!4m5!1s0x8e40de93559a64cf%3A0x8a962faca57ede09!2sAeropuerto+Base+A%C3%A9rea+Germ%C3%A1n+Olano%2C+Cundinamarca!3m2!1d5.465923999999999!2d-74.65755!4m5!1s0x8e40de8d26f578db%3A0xb1ba4bba08d7bdd4!2sColegio+Dpeartamental+Mixto%2C+Puerto+Salgar+-+Cundinamarca!3m2!1d5.4653778!2d-74.6493691!5e1!3m2!1ses-419!2sco!4v1478198227879" width="100%" height="600" frameborder="0" style="border:0" allowfullscreen></iframe>
+            <h4 class="center">Ubícanos..</h4>
+             <iframe src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d3598.7082584053187!2d-74.65493068320242!3d5.465251842557875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e6!4m5!1s0x8e40de93559a64cf%3A0x8a962faca57ede09!2sAeropuerto+Base+A%C3%A9rea+Germ%C3%A1n+Olano%2C+Cundinamarca!3m2!1d5.465923999999999!2d-74.65755!4m5!1s0x8e40de8d26f578db%3A0xb1ba4bba08d7bdd4!2sColegio+Dpeartamental+Mixto%2C+Puerto+Salgar+-+Cundinamarca!3m2!1d5.4653778!2d-74.6493691!5e1!3m2!1ses-419!2sco!4v1478198227879" width="100%" height="600" frameborder="0" style="border:0" allowfullscreen></iframe>
         </div>
     </div>
 
-
     <footer>
-        @yield('footer')
+
+        <div id="footer">
+            <div class="container">
+
+                <ul>
+                    <li>
+                        <span class="chip"><i class="fa fa-map"></i></span> <span class="chip">Cra 8 N° 65-23, Barrio Pitalito</span>
+                    </li>
+
+                    <li>
+                        <span class="chip"><i class="fa fa-phone"></i></span> <span class="chip">311-456-3456 , 857-7654 </span>
+                    </li>
+
+                    <li>
+                        <span class="chip"><i class="fa fa-send"></i></span> <span class="chip">departamental@hotmail.com</span>
+                    </li>
+
+                    <li>
+                        <span class="chip"><i class="fa fa-facebook"></i></span> <span class="chip">departamental@facebook.com</span>
+                    </li>
+
+                    <li>
+
+                    </li>
+                </ul>
+
+                <div class="center" id="copy">
+                    CopyRight &copy Colegio Departamental Mixto 2016
+                </div>
+            </div>
+
+
+        </div>
     </footer>
 
-    @include('layouts.links.js')
 
+
+    @include('layouts.links.js')
     @yield('js')
 
     <script>
