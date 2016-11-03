@@ -2,6 +2,6 @@
 
 @section('content')
 
-   Aqui va el cuerpo 
+   Aqui va el cuerpo asdfasdf
 
 @endsection

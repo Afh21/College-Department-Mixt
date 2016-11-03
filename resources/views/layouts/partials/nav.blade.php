@@ -19,8 +19,9 @@
                         Sr, {{ Auth::user()->name }}
                 </li>
                 <li>
-                    <a class="dropdown-button" href="#!" data-activates="dropdown1" style="padding-left: 50px"> Opciones
-                        <i class="fa fa-gears right"></i>
+
+                    <a class="dropdown-button" href="#!" data-activates="dropdown1" style="padding-left: 50px">
+                        Opciones <i class="fa fa-gears right prefix"></i>
                     </a>
                 </li>
 

@@ -2,6 +2,5 @@
 
 @section('content')
 
-    aqui va el cuerpo
 
 @endsection
