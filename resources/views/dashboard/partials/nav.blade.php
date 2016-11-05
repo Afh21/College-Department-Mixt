@@ -17,12 +17,12 @@
     <li>
         <ul class="collapsible" data-collapsible="accordion">
             <li>
-                <a class="collapsible-header menu"> <i class="fa fa-users left"></i> Usuarios
-                    {{-- @if(!Route::is('users'))
+                <a href="{{route('users')}}" class="collapsible-header menu"> <i class="fa fa-users left"></i> Usuarios
+                    @if(!Route::is('users'))
                         <button disabled class="btn-floating btn-flat btn-xs waves-effect waves-light grey lighten-1 right tooltiped" style="display: inherit; padding-left: 3px; vertical-align: middle; margin-top: 4px" data-tooltip="Crear Usuario" data-delay="50" data-position="right"> <i class="fa fa-plus"></i> </button>
                     @else
                         <button class="btn-floating btn-flat btn-xs waves-effect waves-light grey lighten-1 right modal-trigger create tooltiped" style="display: inherit; padding-left: 3px; vertical-align: middle; margin-top: 4px" data-target="modalCreate" data-tooltip="Crear Usuario" data-delay="50" data-position="right"> <i class="fa fa-plus" style="color: black"></i> </button>
-                    @endif --}}
+                    @endif
                 </a>
 
                 <div class="collapsible-body">
