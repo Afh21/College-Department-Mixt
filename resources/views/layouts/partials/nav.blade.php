@@ -10,13 +10,13 @@
             @else
                 <li>
                     @if(Auth::user()->is('administrator'))
-                        <i class="fa fa-shield right" style="padding-right:15px"> </i>
+                        <i class="fa fa-diamond right" style="padding-right:15px"> </i>
                     @elseif(Auth::user()->is('teacher'))
                         <i class="fa fa-graduation-cap right" style="padding-right:15px"> </i>
                     @else
                         <i class="fa fa-child right" style="padding-right:15px"> </i>
                     @endif
-                        Sr, {{ Auth::user()->name }}
+                        {{ Auth::user()->user_genre == 'M' ? "Sr" : "Sra" }} {!! Auth::user()->name !!}
                 </li>
                 <li>
 
@@ -41,11 +41,11 @@
             </a>
         @elseif(Auth::user()->is('teacher'))
             <a href="{{route('user.show', Auth::user()->id)}}">
-                <i class="fa fa-graduation"></i> &nbsp; Perfil Profesor
+                <i class="fa fa-graduation-cap"></i> &nbsp; Perfil
             </a>
         @else
             <a href="{{route('student.show', Auth::user()->id)}}">
-                <i class="fa fa-child"></i> &nbsp; Perfil Estudiante
+                <i class="fa fa-child"></i> &nbsp; Perfil
             </a>
         @endif
     </li>

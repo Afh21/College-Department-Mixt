@@ -23,10 +23,24 @@ class DashboardController extends Controller
         return view('dashboard.app');
     }
 
-    public function getUsers(){
+    public function getAdmins(){
         $admin = User::all();
         return view('dashboard.views.administrators.administrators')->with('admin', $admin);
     }
+
+    public function getTeachers(){
+        $admin  = User::all();
+        return view('dashboard.views.administrators.teachers')->with('admin', $admin);
+    }
+
+    public function getStudents(){
+        $admin   =    User::all();
+        return view('dashboard.views.administrators.students')->with('admin', $admin);
+    }
+
+
+
+
 
     public function getPeriods(){
         $periods = Period::orderBy('period_name', 'ASC')->get();

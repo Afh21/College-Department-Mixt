@@ -1,24 +1,26 @@
 @extends('dashboard.app')
 
 @section('content')
-        <div class="row">
+    <div class="row">
 
-            <table class="table-hovered">
-                <thead>
-                <tr>
-                    <td>Tipo</td>
-                    <td>Nombres</td>
-                    <td>Apellidos</td>
-                    <td>Correo Electronico</td>
-                    <td>(Activo / Inactivo)</td>
-                    <td></td>
-                </tr>
-                </thead>
-                <tbody>
+        <table class="table-hovered">
+            <thead>
+            <tr>
+                <td>Tipo</td>
+                <td>Nombres</td>
+                <td>Apellidos</td>
+                <td>Correo Electronico</td>
+                <td>(Activo / Inactivo)</td>
+                <td>Director de Grupo</td>
+                <td>Grupos Asignados</td>
+                <td></td>
+            </tr>
+            </thead>
+            <tbody>
 
-                    @foreach($admin as $admin)
-                        @foreach($admin->roles as $role)
-                            @if($role->slug == 'administrator')
+            @foreach($admin as $admin)
+                @foreach($admin->roles as $role)
+                    @if($role->slug == 'student')
                         <tr>
                             <td>
                                 @foreach($admin->roles as $role)
@@ -54,6 +56,34 @@
                                 @endif
                             </td>
 
+
+                            <td>
+                                @if($admin->is('teacher'))
+                                    @if($admin->TeacherDirector()->count()  > 0 )
+                                        @foreach($admin->TeacherDirector as $group)
+                                            <span class="chip green tooltipped" data-tooltip="Grupo asignado" data-delay="50" data-possition="buttom">{!! $group->group_name !!}</span>
+                                            <a href="{!! route('UnassignGroup', $admin->id) !!}" class="btn-floating"><i class=" fa fa-refresh"></i></a>
+                                        @endforeach
+                                    @else
+                                        <span class="chip" style="color: black">Disponible</span>
+                                        <button class="btn-floating green tooltipped modal-trigger AsignGroupDirector" data-target="modalAsignGroup" data-tooltip="Asignar grupo" data-delay="50" data-possition="buttom"><i class="fa fa-plus"></i></button>
+                                    @endif
+                                @elseif($admin->is('student'))
+                                    <span class="chip" style="color: black">{!! $admin->group->group_name !!}</span>
+                                @endif
+                            </td>
+
+
+                            <td class="center">
+                                @if($admin->is('teacher'))
+                                    @if($admin->TeacherGroups->count() > 0)
+                                        @foreach($admin->TeacherGroups as $groups)
+                                            <span class="chip">{!! $groups->group_name !!}</span>
+                                        @endforeach
+                                    @endif
+                                @endif
+                            </td>
+
                             <td>
                                 <ul style="padding: 0px 3px">
                                     <li data-id="{{$admin->id}}" style="display: inline-block; padding-left: 0px">
@@ -82,27 +112,26 @@
                                 </ul>
                             </td>
                         </tr>
-                        @endif
-                    @endforeach
+
+                    @endif
                 @endforeach
-                </tbody>
-            </table>
+            @endforeach
 
+            </tbody>
+        </table>
+    </div>
 
+    <div id="create">
+        @include('dashboard.views.administrators.formCreate')
+    </div>
 
-        </div>
+    <div id="edit">
+        @include('dashboard.views.administrators.formEdit')
+    </div>
 
-        <div id="create">
-            @include('dashboard.views.administrators.formCreate')
-        </div>
-
-        <div id="edit">
-            @include('dashboard.views.administrators.formEdit')
-        </div>
-
-        <div id="asignDirector">
-            @include('dashboard.views.administrators.groupsDirector')
-        </div>
+    <div id="asignDirector">
+        @include('dashboard.views.administrators.groupsDirector')
+    </div>
 
 @endsection
 

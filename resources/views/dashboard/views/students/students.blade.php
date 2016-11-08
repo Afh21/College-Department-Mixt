@@ -10,19 +10,22 @@
 </head>
 <body>
 
-    <div class="row">
+    <div class="row" style="margin-top: 1em">
         <div class="container">
 
-            <div class="col l12 center" style="margin-top: 4em">
+            <div class="col l12 center" style="margin-top: 2em">
+                <h1 style="margin-top: 0px"> <i class="fa fa-child"></i> </h1>
                 <span style="font-size: 5em">{{$user->name}}</span> &nbsp; <span style="font-size: 3em">{{$user->user_lastname}}</span>
             </div>
 
-            <div class="col l12 center" style="margin-top: 5em">
+            <div class="col l12 center" style="margin-top: 1em">
                 <button class="btn-floating btn-large white groupId" data-group="{!!  $user->group->id !!}" style="color: black"> {!! $user->group->group_name !!} </button>
             </div>
 
             <div class="col l12" style="margin-top: 5em">
                 <div class="col l6">
+                    <p class="center" style="font-size: 1.2em; "> Datos personales  </p>
+                    <hr>
                     <div class="col l6">
                         <ul>
                             <li>
@@ -67,8 +70,9 @@
                     </div>
                 </div>
 
-                <div class="col l4 center">
-                    <h5 class="center"> Periodos </h5>
+                <div class="col l6 center">
+                    <p class="center" style="font-size: 1.2em; "> Periodos disponible para consulta </p>
+                    <hr>
                     @foreach($period as $period)
                         <ul style ="display: inline-block">
                             <li data-student="{!! $user->id !!}" >

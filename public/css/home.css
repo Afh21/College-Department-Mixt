@@ -9,6 +9,11 @@ nav {
     box-shadow: none;
 }
 
+nav div ul li{
+    color: black;
+    font-weight: 800;
+}
+
 nav div ul li a{
     color: black;
     font-weight: 800;

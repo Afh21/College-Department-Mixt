@@ -21,9 +21,12 @@ Route::get('/home', 'HomeController@index');
 
 Route::group(['middleware' => 'auth'], function (){
 
-    Route::get('/dashboard', ['uses'  => 'DashboardController@index', 'as'    => 'dashboard']);
+    Route::get('/dashboard',                ['uses' => 'DashboardController@index', 'as'    => 'dashboard']);
 
-    Route::get('/dashboard/users',          ['uses' => 'DashboardController@getUsers','as'  => 'users']);
+    Route::get('/dashboard/admins',         'DashboardController@getAdmins')->name('admins');
+    Route::get('/dashboard/teachers',       'DashboardController@getTeachers')->name('teachers');
+    Route::get('/dashboard/students',       'DashboardController@getStudents')->name('students');
+
     Route::get('/admins/find/{id}',         ['uses' => 'DashboardController@find','as'  => 'find']);
     Route::put('/admins/find/{id}/update',  ['uses' => 'DashboardController@updateAdmin','as'  => 'update']);
     Route::post('/admins/save',             ['uses' => 'DashboardController@saveAdmin','as'  => 'save']);

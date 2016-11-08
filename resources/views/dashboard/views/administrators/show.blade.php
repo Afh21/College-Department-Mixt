@@ -24,10 +24,10 @@
         </div>
 
 
-        <div class="col l5" style="margin-top: 50px">
+        <div class="{{$user->is('administrator') ? "col l5 push-l4" : "col l5" }}" style="margin-top: 50px">
 
             <div class="col l12">
-                <p class="center"> <b> Datos Personales </b> </p>
+                <p class="center"> <b> Datos Personales </b> <hr> </p>
                 <div class="col l6">
                     <ul>
                         <li>
@@ -70,8 +70,12 @@
                         </li>
                     </ul>
                 </div>
+
+
+                @if($user->is('teacher') || $user->is('student') )
                 <div class="col l12">
-                    <p class="center"> <b> Datos academicos </b> </p>
+                    <p class="center"> <b> Datos academicos </b>
+                    <hr></p>
                     <ul>
                         <li style="display: inline">
                         @if($user->TeacherGroups->count() > 0)
@@ -107,7 +111,7 @@
                 <tr>
                     <th data-field="group"> Grupo</th>
                     <th data-field="math">  Materias del profesor</th>
-                    @if($user->id == Auth::user()->id)
+                    @if($user->id != Auth::user()->id)
                         <th data-field="period"> Periodos (Habilitados / Deshabilitados) </th>
                     @endif
                 </tr>
@@ -126,7 +130,7 @@
                                             <td>
                                                 <!-- Si el usuario autenticado es igual al usuario que se ve  RECORDAR CAMBIAR EL != x == -->
 
-                                                @if($user->id == Auth::user()->id)  <!-- ...... RECORDARSE .... -->
+                                                @if($user->id != Auth::user()->id)  <!-- ...... RECORDARSE .... -->
                                                     @foreach($materiasProfesor->periods as $period)
                                                         @if($period->period_state == 0)
                                                             <button class="btn-floating waves-effect waves-circle tooltipped" disabled data-period="{!! $period->id !!}" data-tooltip="Deshabilitado" data-delay="50" data-position="left">{!! $period->period_name !!}</button>
@@ -135,7 +139,7 @@
                                                         @endif
                                                     @endforeach
                                                 @else
-                                                    <a href="{{route('users')}}" class="btn btn-large waves-effect">
+                                                    <a href="{{route('dashboard')}}" class="btn btn-large waves-effect">
                                                         <i class="fa fa-rotate-left left" style="color: black"></i>  Ir a Usuarios</a>
                                                 @endif
                                             </td>
@@ -151,7 +155,7 @@
 
         </div>
     </div>
-
+    @endif
     <div id="note">
 
     </div>

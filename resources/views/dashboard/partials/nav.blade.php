@@ -5,7 +5,7 @@
             <img class="background" src="{{asset('images/back.jpg')}}">
 
             <div class="center">
-                <a href="#!user"> <img class="circle" src="{{asset('images/profile.jpg')}}" style="display: initial"> </a>
+                <a href="/dashboard"> <img class="circle" src="{{asset('images/profile.jpg')}}" style="display: initial"> </a>
             </div>
 
             <span class="name" style="color:black">@if(Auth::user()) {{ Auth::user()->name }} {{Auth::user()->user_lastname}} </span>
@@ -17,28 +17,28 @@
     <li>
         <ul class="collapsible" data-collapsible="accordion">
             <li>
-                <a href="{{route('users')}}" class="collapsible-header menu"> <i class="fa fa-users left"></i> Usuarios
-                    @if(!Route::is('users'))
-                        <button disabled class="btn-floating btn-flat btn-xs waves-effect waves-light grey lighten-1 right tooltiped" style="display: inherit; padding-left: 3px; vertical-align: middle; margin-top: 4px" data-tooltip="Crear Usuario" data-delay="50" data-position="right"> <i class="fa fa-plus"></i> </button>
-                    @else
+                <a class="collapsible-header menu"> <i class="fa fa-users left"></i> Usuarios
+                    @if(Route::is('admins') || Route::is('teachers') || Route::is('students'))
                         <button class="btn-floating btn-flat btn-xs waves-effect waves-light grey lighten-1 right modal-trigger create tooltiped" style="display: inherit; padding-left: 3px; vertical-align: middle; margin-top: 4px" data-target="modalCreate" data-tooltip="Crear Usuario" data-delay="50" data-position="right"> <i class="fa fa-plus" style="color: black"></i> </button>
+                    @else
+                        <button disabled class="btn-floating btn-flat btn-xs waves-effect waves-light grey lighten-1 right tooltiped" style="display: inherit; padding-left: 3px; vertical-align: middle; margin-top: 4px" data-tooltip="Crear Usuario" data-delay="50" data-position="right"> <i class="fa fa-plus"></i> </button>
                     @endif
                 </a>
 
                 <div class="collapsible-body">
                    <ul>
                        <li>
-                           <a href="">
+                           <a href="{{route('admins')}}">
                                <i class="fa fa-diamond"></i> Administradores
                            </a>
                        </li>
                        <li>
-                           <a href="">
-                               <i class="fa fa-suitcase"></i> Profesores
+                           <a href="{{route('teachers')}}">
+                               <i class="fa fa-graduation-cap"></i> Profesores
                            </a>
                        </li>
                        <li>
-                           <a href="">
+                           <a href="{{route('students')}}">
                                <i class="fa fa-group"></i> Estudiantes
                            </a>
                        </li>
