@@ -1,9 +1,9 @@
 <div id="modalAsignGroup" class="modal row">
     <div class="modal-content" style="margin: 3em 0px">
         <div class="col l6">
-            <span style="font-size: 1.2em"> <b> Asignar grupo a: </b> </span> <span class="chip"> {!! $admin->name !!} </span>
+            <span style="font-size: 1.2em"> <b> Asignar grupo a: </b> </span> <span class="chip">  </span>
             <br><br>
-            <form id="FormGroupDirector" data-teacher="{!! $admin->id !!}">
+            <form id="FormGroupDirector" >
                 <input type="hidden" id="tokenGroupDirector" name="_token" value="{{csrf_token()}}">
 
                     <div class="input-field col l12">

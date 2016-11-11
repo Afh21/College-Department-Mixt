@@ -24,7 +24,7 @@
         </div>
 
 
-        <div class="{{$user->is('administrator') ? "col l5 push-l4" : "col l5" }}" style="margin-top: 50px">
+        <div class="{{$user->is('administrator') ? "col l5 push-l4" : "col l5" }}" style="margin-top: 40px">
 
             <div class="col l12">
                 <p class="center"> <b> Datos Personales </b> <hr> </p>
@@ -74,38 +74,45 @@
 
                 @if($user->is('teacher') || $user->is('student') )
                 <div class="col l12">
-                    <p class="center"> <b> Datos academicos </b>
-                    <hr></p>
-                    <ul>
-                        <li style="display: inline">
-                        @if($user->TeacherGroups->count() > 0)
-                            <span class="chip">Grupos: </span>
-                            @foreach($user->TeacherGroups as $group)
-                                  <button class="btn-floating waves-effect waves-circle" style="margin: 1px 10px"> {!! $group->group_name !!}</button> @if($group->students) {!! $group->students->count() !!} @endif
-                            @endforeach
-                        @endif
-                        @if($user->group)
-                            <span class="chip">Grupo: </span>
-                            <span class="chip"> {!! $user->group->group_name !!}</span>
-                        @endif
-                        </li>
+                    <div class="{{$user->TeacherDirector->count() > 0 ? 'col l8': 'col l12 center'}}">
+                        <p class="center"> <b> Datos academicos </b> <hr> </p>
+                        <ul>
+                            <li style="display: inline">
+                            @if($user->TeacherGroups->count() > 0)
+                                <span class="chip">Grupos: </span>
+                                @foreach($user->TeacherGroups as $group)
+                                      <button class="btn-floating waves-effect waves-circle" style="margin: 1px 10px"> {!! $group->group_name !!}</button> @if($group->students) {!! $group->students->count() !!} @endif
+                                @endforeach
+                            @endif
+                            @if($user->group)
+                                <span class="chip">Grupo: </span>
+                                <span class="chip"> {!! $user->group->group_name !!}</span>
+                            @endif
+                            </li>
 
-                        <li style="margin-top: 20px">
-                        @if($user->is('teacher') && $user->TeacherMaths)
-                            <span class="chip">Materias: </span>
-                            @foreach($user->TeacherMaths as $math)
-                                <span class="chip"> {!! $math->math_code !!} - {!! $math->math_name !!}</span>
-                            @endforeach
-                        @endif
-                        </li>
-
-                    </ul>
+                            <li style="margin-top: 20px">
+                            @if($user->is('teacher') && $user->TeacherMaths)
+                                <span class="chip">Materias: </span>
+                                @foreach($user->TeacherMaths as $math)
+                                    <span class="chip"> {!! $math->math_code !!} - {!! $math->math_name !!}</span>
+                                @endforeach
+                            @endif
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col l4">
+                        <p class="center"> <b> ¿Director de Grupo? </b> <hr> </p>
+                        @foreach($user->TeacherDirector as $director)
+                                <p class="center"> <button class="btn-floating"> {!! $director->group_name !!} </button> </p>
+                        @endforeach
+                    </div>
                 </div>
+
             </div>
 
         </div>
 
-        <div class="col l7" style="margin-top: 50px">
+        <div class="col l7" style="margin-top: 40px">
             <table>
                 <thead>
                 <tr>
@@ -291,7 +298,6 @@
                                 var token   =   $('#token').val();
                                 //var route   = 'http://localhost:8000/user/'+student+'/group/'+group+'/math/'+math+'/period/'+period+'/save';
                                 var route   = 'http://localhost:8000/teacher/'+teacher+'/user/'+student+'/group/'+group+'/math/'+math+'/period/'+period+'/save';
-                                //alert(route + " " + note);
 
                                 $.ajax({
                                     url:        route,
@@ -301,7 +307,9 @@
                                     data:       {'note': note},
                                     success: function (res){
                                         Materialize.toast(res.msn, 10000);
-                                        ///window.location.href = 'http://localhost:8000/profile/'+teacher+'';
+                                        row.find('td button.Finished').hide();
+                                        row.find('td button.Begin').show();
+
                                     }, fail: function (){
                                         alert('Fallo el guardado de los datos');
                                     }

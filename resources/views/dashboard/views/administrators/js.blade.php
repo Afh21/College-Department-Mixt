@@ -264,10 +264,20 @@
             alert('Fallo la consulta de grupos');
         })
 
-        $('.AsignGroupDirector').click(function (){
-            var route = 'http://localhost:8000/groups/available';
-            $.get(route, function (){
 
+        $('.AsignGroupDirector').click(function (){
+            var id = $(this).parents('tr').attr('data-id');
+            var route = 'http://localhost:8000/groups/available';
+            var routefind = 'http://localhost:8000/admins/find/'+id+'';
+
+            $.get(routefind, function () {
+            }).success(function (res){
+                $('div#modalAsignGroup span.chip').append("Profesor "+res.user.name + " " + res.user.user_lastname);
+            }).fail(function (res){
+                alert('Fallo la consulta');
+            });
+
+            $.get(route, function (){
             }).success(function (res){
                 if(res.groups.length > 0){
                     $(res.groups).each(function (key){
@@ -275,7 +285,6 @@
                         $('select#AsignGroupDirectorAvailable').material_select();
 
                         $('.SendGroupToDirector').click(function (){
-                            var id = $('form#FormGroupDirector').attr('data-teacher');
                             var asign   = "http://localhost:8000/teacher/"+id+"/assign ";
                             var data    = $('#FormGroupDirector').serialize();
                             var token   = $('input#tokenGroupDirector').val();

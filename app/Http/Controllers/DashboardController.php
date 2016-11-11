@@ -20,7 +20,37 @@ class DashboardController extends Controller
     }
 
     public function index(){
-        return view('dashboard.app');
+
+        $admin = DB::table('role_user')
+            ->join('users', 'role_user.user_id', '=', 'users.id')
+            ->join('roles', 'role_user.role_id', '=', 'roles.id')
+            ->where('roles.slug', '=', 'administrator')
+            ->count();
+
+        $teacher = DB::table('role_user')
+            ->join('users', 'role_user.user_id', '=', 'users.id')
+            ->join('roles', 'role_user.role_id', '=', 'roles.id')
+            ->where('roles.slug', '=', 'teacher')
+            ->count();
+
+        $student = DB::table('role_user')
+            ->join('users', 'role_user.user_id', '=', 'users.id')
+            ->join('roles', 'role_user.role_id', '=', 'roles.id')
+            ->where('roles.slug', '=', 'student')
+            ->count();
+
+        $group = Group::all()->count();
+        $math  = Math::all()->count();
+        $periodos = Period::all()->count();
+
+        return view('dashboard.all')
+                                    ->with('admin', $admin)
+                                    ->with('teacher', $teacher)
+                                    ->with('student', $student)
+                                    ->with('group', $group)
+                                    ->with('math', $math)
+                                    ->with('periodos', $periodos);
+
     }
 
     public function getAdmins(){

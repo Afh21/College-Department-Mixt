@@ -34,12 +34,12 @@
                                 <td>
                                     <ul>
                                         <li style="display: inline" data-id="{{$math->id}}">
-                                            <button class="btn-floating lime accent-2 waves-effect waves-circle tooltiped modal-trigger updateMath" data-target="modalEditMath"data-id="{{$math->id}}" data-tooltip="Editar" data-position="bottom" data-delay="50">
+                                            <button class="btn-floating white waves-effect waves-circle tooltiped modal-trigger updateMath" data-target="modalEditMath"data-id="{{$math->id}}" data-tooltip="Editar" data-position="bottom" data-delay="50">
                                                 <i class="fa fa-edit" style="color: black"></i> </button>
                                         </li>
                                         <li  style="display: inline; padding-left: 20px">
-                                            <a href="{{route('destroy', $math->id)}}" class="btn-floating waves-effect waves-circle deep-orange darken-1 tooltiped" data-id="{{$math->id}}" data-tooltip="Eliminar" data-position="bottom" data-delay="50">
-                                                <i class="fa fa-times" style="color: white"></i> </a>
+                                            <a href="{{route('destroy', $math->id)}}" class="btn-floating white waves-effect waves-circle tooltiped" data-id="{{$math->id}}" data-tooltip="Eliminar" data-position="bottom" data-delay="50">
+                                                <i class="fa fa-trash-o" style="color: red; font-size: 22px"></i> </a>
                                         </li>
                                     </ul>
                                 </td>

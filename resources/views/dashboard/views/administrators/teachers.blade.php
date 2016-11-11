@@ -9,7 +9,6 @@
                 <td>Tipo</td>
                 <td>Nombres</td>
                 <td>Apellidos</td>
-                <td>Correo Electronico</td>
                 <td>¿Director de Grupo?</td>
                 <td>Grupos Asignados</td>
                 <td>Materias Asignadas</td>
@@ -21,7 +20,7 @@
             @foreach($admin as $admin)
                 @foreach($admin->roles as $role)
                     @if($role->slug == 'teacher')
-                <tr>
+                <tr data-id="{!! $admin->id !!}">
                     <td>
                         @foreach($admin->roles as $role)
                             @if($role->slug == 'administrator')
@@ -45,10 +44,6 @@
                     <td>
                         {!! $admin->user_lastname !!}
                     </td>
-                    <td>
-                        {!! $admin->email !!}
-                    </td>
-
                     <td>
                         @if($admin->is('teacher'))
                             @if($admin->TeacherDirector()->count()  > 0 )
@@ -75,8 +70,16 @@
                             @endif
                         @endif
                     </td>
-                    <td>
-                        hola maths
+                    <td class="center">
+                        @if($admin->is('teacher'))
+                            @if($admin->TeacherMaths->count() > 0)
+                                @foreach($admin->TeacherMaths as $math)
+                                    <span class="chip">{!! $math->math_name !!}</span>
+                                @endforeach
+                            @else
+                                "No hay materias asignadas"
+                            @endif
+                        @endif
                     </td>
 
                     <td>

@@ -10,9 +10,7 @@
                 <td>Nombres</td>
                 <td>Apellidos</td>
                 <td>Correo Electronico</td>
-                <td>(Activo / Inactivo)</td>
-                <td>Director de Grupo</td>
-                <td>Grupos Asignados</td>
+                <td>Grupo</td>
                 <td></td>
             </tr>
             </thead>
@@ -48,51 +46,20 @@
                             <td>
                                 {!! $admin->email !!}
                             </td>
-                            <td class="center">
-                                @if($admin->user_state == 'enabled')
-                                    <span><i class="fa fa-circle" style="color: green"></i></span>
-                                @else
-                                    <span><i class="fa fa-circle" style="color: grey"></i></span>
-                                @endif
-                            </td>
-
 
                             <td>
-                                @if($admin->is('teacher'))
-                                    @if($admin->TeacherDirector()->count()  > 0 )
-                                        @foreach($admin->TeacherDirector as $group)
-                                            <span class="chip green tooltipped" data-tooltip="Grupo asignado" data-delay="50" data-possition="buttom">{!! $group->group_name !!}</span>
-                                            <a href="{!! route('UnassignGroup', $admin->id) !!}" class="btn-floating"><i class=" fa fa-refresh"></i></a>
-                                        @endforeach
-                                    @else
-                                        <span class="chip" style="color: black">Disponible</span>
-                                        <button class="btn-floating green tooltipped modal-trigger AsignGroupDirector" data-target="modalAsignGroup" data-tooltip="Asignar grupo" data-delay="50" data-possition="buttom"><i class="fa fa-plus"></i></button>
-                                    @endif
-                                @elseif($admin->is('student'))
                                     <span class="chip" style="color: black">{!! $admin->group->group_name !!}</span>
-                                @endif
-                            </td>
-
-
-                            <td class="center">
-                                @if($admin->is('teacher'))
-                                    @if($admin->TeacherGroups->count() > 0)
-                                        @foreach($admin->TeacherGroups as $groups)
-                                            <span class="chip">{!! $groups->group_name !!}</span>
-                                        @endforeach
-                                    @endif
-                                @endif
                             </td>
 
                             <td>
                                 <ul style="padding: 0px 3px">
-                                    <li data-id="{{$admin->id}}" style="display: inline-block; padding-left: 0px">
+                                    <li data-id="{{$admin->id}}" style="display: inline-block; padding-left: 3px">
                                         <button class="btn-floating waves-circle white tooltiped edit modal-trigger" data-target="modalEdit" data-id="{{$admin->id}}" data-position="bottom" data-delay="50" data-tooltip="Editar">
                                             <i class="fa fa-edit" style="color:black"></i>
                                         </button>
                                     </li>
 
-                                    <li data-id="{{$admin->id}}" style="display: inline-block; padding-left: 0px">
+                                    <li data-id="{{$admin->id}}" style="display: inline-block; padding-left: 3px">
                                         @if($admin->is('teacher') || $admin->is('administrator') )
                                             <a href="{{route('user.show', $admin->id)}}" class="btn-floating waves-circle white tooltiped profile" data-position="bottom" data-delay="50" data-tooltip="Ver Perfil">
                                                 <i class="fa fa-eye" style="color:grey"></i>
@@ -104,7 +71,7 @@
                                         @endif
                                     </li>
 
-                                    <li data-id="{{$admin->id}}" style="display: inline-block; padding-left: 0px">
+                                    <li data-id="{{$admin->id}}" style="display: inline-block; padding-left: 3px">
                                         <a href="{{route('destroy.user', $admin->id)}}" class="btn-floating waves-circle white tooltiped delete" data-position="bottom" data-delay="50" data-tooltip="Eliminar">
                                             <i class="fa fa-trash-o" style="color:red"></i>
                                         </a>

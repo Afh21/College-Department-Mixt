@@ -91,13 +91,8 @@
                             honrados de tener, ya que con su experiencia en la docencia, hacen de las clases diarias
                             un mundo lleno de conocimiento para nuestros niños y jovenes. <br><br> Los <b>Grupos</b>
                             disponibles son ...
-                            <span class="chip">1A</span> <span class="chip">1B</span> <span class="chip">1C</span>
-                            <span class="chip">2A</span> <span class="chip">2B</span> <span class="chip">2C</span>
-                            <span class="chip">3A</span> <span class="chip">3B</span>
-                            <span class="chip">4A</span> <span class="chip">4B</span> <span class="chip">4C</span>
-                            <span class="chip">5A</span> <span class="chip">5B</span> <span class="chip">5C</span>
-                            <span class="chip">6-1</span> <span class="chip">6-2</span> <span class="chip">6-3</span>
-                            etc..
+                            <span class="chip">Primero</span> <span class="chip">Segundo</span> <span class="chip">Tercero</span>
+                            <span class="chip">Cuarto</span> <span class="chip">Quinto</span>
                         </p>
                     </div>
                     <div class="col l6 right">
