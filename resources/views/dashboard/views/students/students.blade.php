@@ -71,16 +71,13 @@
                 </div>
 
                 <div class="col l6 center">
-                    <p class="center" style="font-size: 1.2em; "> Periodos disponible para consulta </p>
+                    <p class="center" style="font-size: 1.2em; "> Consultar notas </p>
                     <hr>
-                    @foreach($period as $period)
                         <ul style ="display: inline-block">
-                            <li data-student="{!! $user->id !!}" >
-                                <button class="btn-floating btn-large waves-effect waves-circle seek modal-trigger " data-period="{!! $period->period_id !!}" style="margin: 5px 5px" data-target="modalNote"> {{$period->period_id}} </button>
+                            <li data-student="{!! $user->id !!}" id="studentxx">
+                                <button class="btn-floating btn-large waves-effect waves-circle seek modal-trigger " style="margin: 5px 5px" data-target="modalNote"> <i class="fa fa-search"></i> </button>
                             </li>
                         </ul>
-
-                    @endforeach
                 </div>
             </div>
         </div>
@@ -89,17 +86,19 @@
 
     <div id="modalNote" class="modal">
         <div class="modal-content">
-            <h4 class="center" style="margin-bottom: 50px">PERIODO - <span id="p"></span> </h4>
-            <table>
+            <h4 class="center" style="margin-bottom: 50px">Notas <span id="p"></span> </h4>
+            <table class="striped">
                 <thead>
                 <tr>
-                    <td> Materia </td>
-                    <td> Periodo </td>
-                    <td> Nota    </td>
+                    <td> Materia  </td>
+                    <td> I </td>
+                    <td> II </td>
+                    <td> III </td>
+                    <td> IV </td>
                 </tr>
                 </thead>
                 <tbody>
-
+1309998 - Curso
                 </tbody>
             </table>
         </div>
@@ -120,26 +119,34 @@
                     var group   = $('button.groupId').attr('data-group');
                     var student = $(this).parent('li').attr('data-student');
                     var period  = $(this).attr('data-period');
-                    var route   = 'http://localhost:8000/student/'+student+'/group/'+group+'/period/'+period+'/notes';
-
-                    alert(route);
+                    var route   = 'http://localhost:8000/group/'+group+'/student/'+student+'/notes';
 
                     $.get(route, function (){
                     }).success(function (res) {
                         $('#modalNote').openModal();
                         $('span#p').append(period);
-                        $(res.msn).each(function (key){
-                            $('table tbody').append('<tr id="id" data-student='+res.msn[key].id+'><td>'+res.msn[key].math_name+'</td><td>'+res.msn[key].period_name+'</td><td>'+res.msn[key].note+'</td></tr>');
-                        });
-                    }).fail(function (){
 
-                    });
+                        $(res.msn).each(function (key){
+
+                            function periodo(period){
+                                var nota = res.msn[key].period_name == period ? res.msn[key].note : 0
+                                return nota;
+                            }
+
+                            $('table tbody').append('<tr id="id" data-student='+res.msn[key].id+'> <td> '+ res.msn[key].math_name +'</td> <td id="p_periodo"> '+ periodo("I")  +' </td> <td> '+ periodo("II") +'</td> <td> '+ periodo("III") +'</td> <td> '+ periodo("IV") +'</td> </tr>');
+                        });
+
+
+                    }).fail(function (){ });
+
                 });
 
                 $('.modal-close').click(function () {
-                    var student = $('tr#id').attr('data-student');
+                    var student = $('li#studentxx').attr('data-student');
                     window.location.href = 'http://localhost:8000/student/'+student+'';
-                })
+                });
+
+
             })
         </script>
 

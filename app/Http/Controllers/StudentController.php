@@ -12,7 +12,6 @@ class StudentController extends Controller
 {
     public function profile($id){
         $user = User::find($id);
-
         $period = $user->Notes->unique('period_id');
         return view('dashboard.views.students.students')
                                                         ->with('user', $user)
@@ -20,19 +19,26 @@ class StudentController extends Controller
     }
 
 
-    public function studentNotes($student, $group, $period){
-        $user = DB::table('notes')
-                            ->join('users', 'notes.user_id', '=', 'users.id')
-                            ->join('maths', 'notes.math_id', '=', 'maths.id')
-                            ->join('periods', 'notes.period_id', '=', 'periods.id')
-                            ->where('notes.user_id', '=', $student)
-                            ->where('notes.period_id', '=', $period)
-                            ->where('notes.group_id', '=', $group)
-                            ->select('maths.math_name', 'periods.period_name', 'notes.note', 'users.id')
-                            ->get();
+    public function studentNotes($group, $student ){
+
+        $user = DB::table('group_math')
+            ->join('groups', 'group_math.group_id', '=', 'groups.id')
+            ->join('maths', 'group_math.math_id', '=', 'maths.id')
+            ->join('notes', 'maths.id', '=', 'notes.math_id')
+            ->join('periods', 'notes.period_id', '=', 'periods.id')
+            ->join('users', 'notes.user_id', '=', 'users.id')
+            ->where('groups.id', '=', $group)
+            ->where('users.id', '=', $student)
+            ->where('periods.id', '=', 1)
+            ->select('maths.math_name', 'notes.note', 'periods.period_name')
+            ->groupBy('maths.math_name')
+            ->get();
+
 
         return response()->json([
             'msn'   => $user
         ]);
     }
+
+
 }

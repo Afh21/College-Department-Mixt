@@ -65,6 +65,6 @@ Route::group(['middleware' => 'auth'], function (){
     Route::post('/teacher/{teacher}/user/{user}/group/{group}/math/{math}/period/{period}/save', 'NoteController@saveNote');
     Route::put('/teacher/{teacher}/user/{user}/group/{group}/math/{math}/period/{period}/update',  'NoteController@updateNote');
 
-    Route::get('/group/{group}/period/{period}/student/{student}', 'StudentController@studentNotes');
-    Route::get('/student/{student}/group/{group}/period/{period}/notes', 'StudentController@studentNotes');
+    //Route::get('/group/{group}/period/{period}/student/{student}', 'StudentController@studentNotes');
+    Route::get('/group/{group}/student/{student}/notes', 'StudentController@studentNotes');
 });
