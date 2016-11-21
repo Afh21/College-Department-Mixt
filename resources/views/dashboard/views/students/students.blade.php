@@ -73,7 +73,7 @@
                 <div class="col l6 center">
                     <p class="center" style="font-size: 1.2em; "> Consultar notas </p>
                     <hr>
-                        <ul style ="display: inline-block">
+                        <ul style ="display: inline-block" id="info">
                             <li data-student="{!! $user->id !!}" id="studentxx">
                                 <button class="btn-floating btn-large waves-effect waves-circle seek modal-trigger " style="margin: 5px 5px" data-target="modalNote"> <i class="fa fa-search"></i> </button>
                             </li>
@@ -87,18 +87,19 @@
     <div id="modalNote" class="modal">
         <div class="modal-content">
             <h4 class="center" style="margin-bottom: 50px">Notas <span id="p"></span> </h4>
-            <table class="striped">
+            <table class="striped" id="encabezado">
                 <thead>
                 <tr>
                     <td> Materia  </td>
-                    <td> I </td>
-                    <td> II </td>
-                    <td> III </td>
-                    <td> IV </td>
+                    <td id="I"> I </td>
+                    <td id="II"> II </td>
+                    <td id="III"> III </td>
+                    <td id="IV"> IV </td>
+                    <td> Consultar </td>
                 </tr>
                 </thead>
-                <tbody>
-1309998 - Curso
+                <tbody id="cuerpo">
+
                 </tbody>
             </table>
         </div>
@@ -119,27 +120,61 @@
                     var group   = $('button.groupId').attr('data-group');
                     var student = $(this).parent('li').attr('data-student');
                     var period  = $(this).attr('data-period');
+                    var student = $('li#studentxx').attr('data-student');
                     var route   = 'http://localhost:8000/group/'+group+'/student/'+student+'/notes';
 
                     $.get(route, function (){
                     }).success(function (res) {
                         $('#modalNote').openModal();
-                        $('span#p').append(period);
 
                         $(res.msn).each(function (key){
-
-                            function periodo(period){
-                                var nota = res.msn[key].period_name == period ? res.msn[key].note : 0
-                                return nota;
-                            }
-
-                            $('table tbody').append('<tr id="id" data-student='+res.msn[key].id+'> <td> '+ res.msn[key].math_name +'</td> <td id="p_periodo"> '+ periodo("I")  +' </td> <td> '+ periodo("II") +'</td> <td> '+ periodo("III") +'</td> <td> '+ periodo("IV") +'</td> </tr>');
+                            $('table tbody').append('<tr data-student='+student+' data-math='+res.msn[key].id+'> <td id="MathName"> '+ res.msn[key].math_name +'</td> <td id="I" value=1> </td> <td id="II" value="2"> </td> <td id="III" value="3"> </td> <td id="IV" value="4"> </td> <td> <button class="btn-floating white searchNote"><i class="fa fa-plus" style="color:black"></i></button></td> </tr>');
                         });
+
+                        $('.searchNote').click(function (){
+                            var row = $(this).parents('tr');
+                            var idMath = row.attr('data-math');
+                            var idStudent = row.attr('data-student');
+                            var pp = row.find('td#I').attr('value');
+                            var sp = row.find('td#II').attr('value');
+                            var tp = row.find('td#III').attr('value');
+                            var cp = row.find('td#IV').attr('value');
+                            var pper = 'http://localhost:8000/math/'+idMath+'/period/'+pp+'/student/'+idStudent+'/notas ';
+                            var sper = 'http://localhost:8000/math/'+idMath+'/period/'+sp+'/student/'+idStudent+'/notas ';
+                            var tper = 'http://localhost:8000/math/'+idMath+'/period/'+tp+'/student/'+idStudent+'/notas ';
+                            var cper = 'http://localhost:8000/math/'+idMath+'/period/'+cp+'/student/'+idStudent+'/notas ';
+
+                            $.get(pper, function (){
+                            }).success(function (res){
+                                res.note != null ? row.find('td#I').append(res.note.note) : row.find('td#I').append(0) ;
+                                row.find('td button.searchNote').attr('disabled', true);
+                            }).fail(function (){ alert('No se pudo ejecutar la consulta'); });
+
+                            $.get(sper, function (){
+                            }).success(function (res){
+                                res.note != null ? row.find('td#II').append(res.note.note) : row.find('td#II').append(0) ;
+                            }).fail(function (){ alert('No se pudo ejecutar la consulta'); });
+
+                            $.get(tper, function (){
+                            }).success(function (res){
+                                res.note != null ? row.find('td#III').append(res.note.note) : row.find('td#III').append(0) ;
+                            }).fail(function (){ alert('No se pudo ejecutar la consulta'); });
+
+                            $.get(cper, function (){
+                            }).success(function (res){
+                                res.note != null ? row.find('td#IV').append(res.note.note) : row.find('td#IV').append(0) ;
+                            }).fail(function (){ alert('No se pudo ejecutar la consulta'); });
+
+                        });
+
 
 
                     }).fail(function (){ });
 
                 });
+
+
+
 
                 $('.modal-close').click(function () {
                     var student = $('li#studentxx').attr('data-student');

@@ -67,4 +67,5 @@ Route::group(['middleware' => 'auth'], function (){
 
     //Route::get('/group/{group}/period/{period}/student/{student}', 'StudentController@studentNotes');
     Route::get('/group/{group}/student/{student}/notes', 'StudentController@studentNotes');
+    Route::get('/math/{math}/period/{period}/student/{student}/notas', 'StudentController@notas');
 });

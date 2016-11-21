@@ -233,8 +233,10 @@
 
                                         row.find('td button.Update').dblclick(function (){
                                             var input = row.find('td input#valNote');
-                                            if(input.val() == ""){
-                                                alert('Este campo no debe estar vacío');
+
+                                            if(input.val() == "" || input.val() < 1 || input.val() > 5 ){
+                                                alert('Datos Invalidos!! ' +
+                                                        'Nota debe ser mayor a 1 y menor a 5');
                                             }
                                             else {
                                                 //Actualiza la nota
@@ -275,7 +277,7 @@
                             $('button.AliBaba').click(function (){
                                 var row     = $(this).parents('tr');
                                 var note    =   row.find('td input#valNote').val();
-                                if(note != ""){
+                                if(note != "" || note > 5 || note < 1){
                                     $(this).hide();
                                     row.find('td button.Finished').show();
                                     row.find('td input#valNote').attr('disabled', true);
